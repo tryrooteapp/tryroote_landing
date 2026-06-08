@@ -383,7 +383,6 @@ src="https://www.facebook.com/tr?id=1774947069974247&ev=PageView&noscript=1"
 
       <p class="body">We're keeping the beta small on purpose — we want to actually talk to the people using it. The next cohort opens in a few weeks. Everyone on this list gets priority access, plus a short survey to build your protocol before you even download the app.</p>
 
-      <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
       <div class="form-wrap">
         <form class="cta-form seva-form formkit-form" id="waitlist" action="https://app.kit.com/forms/9526594/subscriptions" method="post" data-sv-form="9526594" data-uid="ebf28efe6f" data-format="inline" data-version="5" novalidate="">
           <input class="formkit-input" type="email" name="email_address" id="email" placeholder="you@email.com" autocomplete="email" required="">
@@ -447,20 +446,42 @@ src="https://www.facebook.com/tr?id=1774947069974247&ev=PageView&noscript=1"
 <script>
   (function () {
     var form = document.getElementById('waitlist');
-    var email = document.getElementById('email');
+    var emailInput = document.getElementById('email');
     var fineprint = document.getElementById('fineprint');
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var v = (email.value || '').trim();
+      var v = (emailInput.value || '').trim();
       if (!v || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
-        email.focus();
+        emailInput.focus();
         return;
       }
-      document.body.classList.add('is-confirmed');
-      fineprint.textContent = "Spot held for " + v;
-      if (typeof fbq !== 'undefined') {
-        fbq('track', 'Lead', {content_name: 'WaitlistSignup'});
-      }
+
+      var btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.querySelector('span').textContent = 'Saving…';
+
+      var body = new FormData();
+      body.append('email_address', v);
+
+      fetch('https://app.kit.com/forms/9526594/subscriptions', {
+        method: 'POST',
+        body: body,
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(function (res) { return res.json(); })
+      .then(function () {
+        document.body.classList.add('is-confirmed');
+        fineprint.textContent = 'Spot held for ' + v;
+        if (typeof fbq !== 'undefined') {
+          fbq('track', 'Lead', { content_name: 'WaitlistSignup' });
+        }
+      })
+      .catch(function () {
+        btn.disabled = false;
+        btn.querySelector('span').textContent = 'Save my spot →';
+        fineprint.textContent = 'Something went wrong — please try again.';
+      });
     });
   })();
 </script>
