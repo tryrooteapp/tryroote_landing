@@ -2,11 +2,27 @@
 <html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Roote — beta is full, but you're next</title>
+<title>Roote — see whether your biohacks are actually working</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1774947069974247');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1774947069974247&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
 
 <style>
   :root {
@@ -17,9 +33,10 @@
     --muted:     oklch(0.52 0.012 90);
     --line:      oklch(0.88 0.012 85);
     --line-2:    oklch(0.93 0.010 85);
-    --accent:    oklch(0.44 0.075 145);   /* forest green */
+    --accent:    oklch(0.44 0.075 145);
     --accent-2:  oklch(0.62 0.075 145);
     --accent-wash: oklch(0.94 0.025 145);
+    --warn:      oklch(0.55 0.12 60);
 
     --serif: "EB Garamond", "Times New Roman", Georgia, serif;
     --sans:  "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -36,19 +53,25 @@
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
   }
+
   ::selection { background: var(--accent); color: var(--paper); }
+
   a { color: inherit; }
 
   .mono { font-family: var(--mono); font-feature-settings: "tnum" 1; }
-  .tnum { font-variant-numeric: tabular-nums; }
+  .serif { font-family: var(--serif); }
+  .tnum  { font-variant-numeric: tabular-nums; }
 
-  .container { max-width: 1180px; margin: 0 auto; padding: 0 56px; width: 100%; }
+  .hairline { background: var(--line); height: 1px; width: 100%; border: 0; }
 
-  /* ─── NAV ─────────────────────────────────────────────── */
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 56px;
+  }
+
+  /* ─── NAV ─────────────────────────────────────────────────── */
   .nav {
     display: flex; align-items: center; justify-content: space-between;
     padding: 26px 0 22px;
@@ -64,12 +87,18 @@
     background: radial-gradient(circle at 35% 30%, var(--accent-2), var(--accent) 60%);
     box-shadow: inset 0 0 0 1px oklch(0.30 0.05 145 / .35);
   }
+  .nav-links {
+    display: flex; gap: 28px; align-items: center;
+    font-size: 13.5px; color: var(--ink-2);
+  }
+  .nav-links a { text-decoration: none; }
+  .nav-links a:hover { color: var(--accent); }
   .beta-pill {
     display: inline-flex; align-items: center; gap: 8px;
     font-family: var(--mono); font-size: 11px;
     text-transform: uppercase; letter-spacing: 0.1em;
     color: var(--accent);
-    padding: 6px 12px 6px 10px;
+    padding: 6px 10px 6px 8px;
     border: 1px solid color-mix(in oklch, var(--accent) 35%, transparent);
     border-radius: 999px;
     background: var(--accent-wash);
@@ -80,48 +109,86 @@
     box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent) 22%, transparent);
   }
 
-  /* ─── MAIN STAGE ──────────────────────────────────────── */
-  main {
-    flex: 1;
+  /* ─── HERO ────────────────────────────────────────────────── */
+  .hero {
+    padding: 88px 0 80px;
     display: grid;
-    place-items: center;
-    position: relative;
-    overflow: hidden;
-    padding: 64px 0 72px;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 64px;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
   }
-
-  /* subtle root/ripple motif behind the panel */
-  .motif {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    overflow: hidden;
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(48px, 5.6vw, 72px);
+    line-height: 1.04;
+    letter-spacing: -0.022em;
+    margin: 22px 0 22px;
+    text-wrap: pretty;
   }
-  .motif svg { position: absolute; }
-  .motif .rings {
-    width: 920px; height: 920px;
-    top: 50%; left: 50%; transform: translate(-50%, -54%);
+  .hero h1 em {
+    font-style: italic;
     color: var(--accent);
-    opacity: 0.06;
+    font-weight: 400;
   }
-  .motif .mark-glow {
-    width: 460px; height: 460px;
-    top: -160px; right: -120px;
-    background: radial-gradient(circle at 50% 50%, var(--accent-2), transparent 62%);
-    opacity: 0.10;
-    border-radius: 50%;
-    filter: blur(2px);
+  .hero .lede {
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    max-width: 540px;
   }
+  .hero-cta {
+    display: flex; gap: 14px; align-items: center;
+    margin-top: 32px;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 22px;
+    border-radius: 999px;
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 14.5px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+    text-decoration: none;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+    box-shadow: 0 1px 0 rgba(255,255,255,.15) inset, 0 8px 20px -10px var(--ink);
+  }
+  .btn-primary:hover { transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink-2);
+    border-color: var(--line);
+  }
+  .btn-ghost:hover { color: var(--ink); border-color: var(--ink-2); }
 
-  .panel {
+  .hero-meta {
+    margin-top: 22px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex; gap: 18px; flex-wrap: wrap;
+  }
+  .hero-meta span::before {
+    content: "·"; margin-right: 18px; color: var(--line);
+  }
+  .hero-meta span:first-child::before { content: ""; margin: 0; }
+
+  /* hero-right: a "preview card" of the daily check-in */
+  .hero-right {
     position: relative;
-    z-index: 1;
-    width: 100%;
-    max-width: 660px;
-    text-align: center;
+    min-height: 460px;
   }
 
+  /* ─── SECTION SCAFFOLDING ────────────────────────────────── */
+  section.block { padding: 96px 0; border-bottom: 1px solid var(--line); }
   .eyebrow {
     font-family: var(--mono);
     font-size: 11px;
@@ -129,198 +196,470 @@
     letter-spacing: 0.14em;
     color: var(--accent);
     display: inline-flex; align-items: center; gap: 10px;
-    margin: 0 0 22px;
   }
   .eyebrow::before {
     content: ""; width: 18px; height: 1px; background: var(--accent);
   }
-
-  h1 {
+  .section-title {
     font-family: var(--serif);
     font-weight: 400;
-    font-size: clamp(42px, 5vw, 60px);
-    line-height: 1.05;
-    letter-spacing: -0.022em;
-    margin: 0 0 20px;
-    text-wrap: balance;
-  }
-  h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
-
-  .lede {
-    font-size: 18px;
-    line-height: 1.55;
-    color: var(--ink-2);
-    max-width: 540px;
-    margin: 0 auto;
+    font-size: clamp(36px, 3.6vw, 48px);
+    line-height: 1.08;
+    letter-spacing: -0.018em;
+    margin: 18px 0 14px;
+    max-width: 800px;
     text-wrap: pretty;
   }
-
-  /* ─── COHORT BAR ──────────────────────────────────────── */
-  .cohort {
-    margin: 38px auto 0;
-    max-width: 460px;
-    text-align: left;
+  .section-sub {
+    color: var(--ink-2);
+    font-size: 17px;
+    max-width: 640px;
   }
-  .cohort-row {
-    display: flex; align-items: baseline; justify-content: space-between;
-    font-family: var(--mono); font-size: 11px;
-    text-transform: uppercase; letter-spacing: 0.12em;
+
+  /* ─── HOW IT WORKS ────────────────────────────────────────── */
+  .steps {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+  .step {
+    padding: 36px 32px 36px 0;
+    border-right: 1px solid var(--line);
+    position: relative;
+  }
+  .step:last-child { border-right: 0; padding-right: 0; }
+  .step:not(:first-child) { padding-left: 32px; }
+  .step-num {
+    font-family: var(--mono);
+    font-size: 11px;
     color: var(--muted);
-    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 10px;
   }
-  .cohort-row .count { color: var(--ink); }
-  .cohort-row .count b { color: var(--accent); font-weight: 500; }
-  .cohort-track {
-    height: 8px; border-radius: 999px;
-    background: var(--bg);
+  .step-num b {
+    color: var(--accent); font-weight: 500;
+  }
+  .step h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin: 0 0 12px;
+  }
+  .step p {
+    margin: 0; color: var(--ink-2); font-size: 15px; line-height: 1.55;
+  }
+  .step-art {
+    margin-top: 28px;
+    height: 96px;
     border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--paper);
     overflow: hidden;
-  }
-  .cohort-fill {
-    height: 100%; width: 100%;
-    background: var(--accent);
-    border-radius: 999px;
+    position: relative;
   }
 
-  /* ─── BODY COPY ───────────────────────────────────────── */
-  .body {
-    margin: 40px auto 0;
-    max-width: 560px;
-    font-size: 16px;
-    line-height: 1.65;
+  /* ─── PROTOCOL GRID ───────────────────────────────────────── */
+  .grid-protocols {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+  .protocol {
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 22px 22px 26px;
+    background: var(--paper);
+    display: flex; flex-direction: column;
+    gap: 14px;
+    min-height: 168px;
+    position: relative;
+    transition: background .2s ease;
+  }
+  .protocol:hover { background: oklch(0.97 0.015 145); }
+  .protocol-i {
+    font-family: var(--mono); font-size: 10.5px;
+    color: var(--muted); letter-spacing: 0.08em;
+  }
+  .protocol h4 {
+    margin: 0; font-family: var(--serif); font-weight: 400;
+    font-size: 22px; line-height: 1.15; letter-spacing: -0.01em;
+  }
+  .protocol .tag {
+    margin-top: auto;
+    font-family: var(--mono); font-size: 10.5px;
     color: var(--ink-2);
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .protocol .glyph {
+    position: absolute; right: 18px; top: 18px;
+    width: 28px; height: 28px;
+  }
+
+  /* ─── CHECK-IN DEMO ──────────────────────────────────────── */
+  .checkin-wrap {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 64px;
+    align-items: center;
+  }
+  .checkin-text h3 {
+    font-family: var(--serif); font-weight: 400; font-size: 28px;
+    margin: 0 0 16px; letter-spacing: -0.01em;
+  }
+  .checkin-text ul {
+    margin: 24px 0 0; padding: 0; list-style: none;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .checkin-text li {
+    display: flex; gap: 14px; align-items: flex-start;
+    color: var(--ink-2); font-size: 15px; line-height: 1.5;
+  }
+  .checkin-text li::before {
+    content: ""; flex-shrink: 0;
+    width: 8px; height: 8px; margin-top: 8px; border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* The phone-ish card */
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 1px 0 rgba(255,255,255,.5) inset, 0 30px 60px -40px oklch(0.20 0.01 90 / .3);
+  }
+  .card-head {
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--mono); font-size: 11px;
+    color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em;
+    margin-bottom: 22px;
+  }
+  .card-head .live {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--accent);
+  }
+  .card-head .live::before {
+    content:""; width:7px; height:7px; border-radius:50%;
+    background: var(--accent);
+    animation: livepulse 1.8s ease-in-out infinite;
+  }
+  @keyframes livepulse {
+    0%,100% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--accent) 50%, transparent); }
+    50%     { box-shadow: 0 0 0 6px color-mix(in oklch, var(--accent) 0%,  transparent); }
+  }
+
+  .q-label {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .q-title {
+    font-family: var(--serif); font-weight: 400;
+    font-size: 30px; line-height: 1.15; letter-spacing: -0.012em;
+    margin: 6px 0 24px;
+  }
+
+  .scale {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 6px;
+  }
+  .scale button {
+    appearance: none; border: 1px solid var(--line);
+    background: var(--bg);
+    border-radius: 10px;
+    height: 52px;
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--ink-2);
+    cursor: pointer;
+    transition: all .12s ease;
+    font-variant-numeric: tabular-nums;
+  }
+  .scale button:hover { border-color: var(--ink-2); color: var(--ink); }
+  .scale button.active {
+    background: var(--ink); color: var(--paper); border-color: var(--ink);
+    transform: translateY(-1px);
+  }
+  .scale-ends {
+    display: flex; justify-content: space-between;
+    margin-top: 12px;
+    font-family: var(--mono); font-size: 11px;
+    color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em;
+  }
+
+  .card-foot {
+    margin-top: 26px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 13px; color: var(--ink-2);
+  }
+  .streak {
+    display: flex; gap: 4px;
+  }
+  .streak i {
+    width: 7px; height: 16px; border-radius: 2px;
+    background: var(--line);
+    display: inline-block;
+  }
+  .streak i.on { background: var(--accent); }
+  .streak i.today { background: var(--accent); outline: 2px solid var(--accent-wash); }
+
+  /* ─── RESULTS / CHART ─────────────────────────────────────── */
+  .results-stats {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .stat {
+    padding: 28px 24px 26px 0;
+    border-right: 1px solid var(--line);
+  }
+  .stat:last-child { border-right: 0; }
+  .stat:not(:first-child) { padding-left: 24px; }
+  .stat .v {
+    font-family: var(--serif); font-weight: 400;
+    font-size: 44px; line-height: 1; letter-spacing: -0.025em;
+    display: flex; align-items: baseline; gap: 10px;
+  }
+  .stat .v small {
+    font-family: var(--mono); font-size: 14px;
+    color: var(--muted); font-weight: 400;
+    letter-spacing: 0;
+  }
+  .stat .v .delta {
+    color: var(--accent);
+  }
+  .stat .lbl {
+    margin-top: 14px;
+    font-family: var(--mono); font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.12em;
+  }
+
+  .chart-wrap {
+    margin-top: 56px;
+    padding: 36px 36px 30px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+  }
+  .chart-head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 22px;
+  }
+  .chart-head h4 {
+    margin: 0; font-family: var(--serif); font-weight: 400; font-size: 26px;
+    letter-spacing: -0.012em;
+  }
+  .chart-head .meta {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em;
+    text-align: right;
+  }
+  .chart-head .meta b { color: var(--ink-2); font-weight: 500; }
+
+  .chart {
+    position: relative;
+    width: 100%;
+    height: 320px;
+  }
+  .insights {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+  .insight {
+    padding: 20px 24px 20px 0;
+    border-right: 1px solid var(--line);
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .insight:last-child { border-right: 0; padding-left: 24px; padding-right: 0; }
+  .insight .marker {
+    flex-shrink: 0; width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: var(--mono); font-size: 10px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .insight p {
+    margin: 0; font-size: 14px; line-height: 1.5; color: var(--ink-2);
+  }
+
+  /* ─── CTA ─────────────────────────────────────────────────── */
+  .cta {
+    padding: 110px 0 120px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .cta h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(44px, 5vw, 64px); line-height: 1.05;
+    letter-spacing: -0.022em;
+    margin: 18px auto 18px;
+    max-width: 720px;
     text-wrap: pretty;
   }
-
-  /* ─── FORM ────────────────────────────────────────────── */
-  .form-wrap { margin: 36px auto 0; max-width: 500px; }
+  .cta p { color: var(--ink-2); font-size: 17px; max-width: 480px; margin: 0 auto 36px; }
   .cta-form {
-    display: flex;
+    display: inline-flex;
     background: var(--paper);
     border: 1px solid var(--line);
     border-radius: 999px;
     padding: 6px 6px 6px 22px;
     align-items: center; gap: 12px;
-    box-shadow: 0 1px 0 rgba(255,255,255,.5) inset, 0 16px 40px -28px var(--ink);
+    width: 100%; max-width: 460px;
+    box-shadow: 0 1px 0 rgba(255,255,255,.4) inset, 0 16px 40px -28px var(--ink);
   }
   .cta-form input {
     flex: 1; border: 0; background: transparent;
     font-family: var(--sans); font-size: 15px; color: var(--ink);
-    outline: 0; padding: 13px 0;
-    min-width: 0;
+    outline: 0; padding: 12px 0;
   }
   .cta-form input::placeholder { color: var(--muted); }
-  .btn {
-    display: inline-flex; align-items: center; gap: 9px;
-    padding: 13px 22px;
-    border-radius: 999px;
-    font-family: var(--sans); font-weight: 500; font-size: 14.5px;
-    cursor: pointer; border: 1px solid transparent; white-space: nowrap;
-    transition: transform .15s ease, box-shadow .15s ease;
-  }
-  .btn-primary {
-    background: var(--ink); color: var(--paper);
-    box-shadow: 0 1px 0 rgba(255,255,255,.15) inset, 0 8px 20px -10px var(--ink);
-  }
-  .btn-primary:hover { transform: translateY(-1px); }
-
-  .fineprint {
-    margin: 16px auto 0;
+  .cta-form .btn-primary { padding: 12px 20px; font-size: 14px; }
+  .cta-meta {
+    margin-top: 18px;
     font-family: var(--mono); font-size: 11px;
-    color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em;
   }
-
-  /* confirmation state */
-  .confirmed {
-    display: none;
-    align-items: center; justify-content: center; gap: 12px;
-    background: var(--accent-wash);
-    border: 1px solid color-mix(in oklch, var(--accent) 30%, transparent);
-    border-radius: 999px;
-    padding: 16px 24px;
+  .cta-url {
+    display: inline-block; margin-top: 40px;
+    font-family: var(--mono); font-size: 13px;
     color: var(--accent);
-    font-family: var(--sans); font-size: 15px; font-weight: 500;
-  }
-  .confirmed .tick {
-    width: 20px; height: 20px; flex-shrink: 0;
-    border-radius: 50%; background: var(--accent);
-    display: inline-flex; align-items: center; justify-content: center;
-  }
-  body.is-confirmed .cta-form { display: none; }
-  body.is-confirmed .confirmed { display: inline-flex; }
-  body.is-confirmed .fineprint { color: var(--accent); }
-
-  /* ─── PERKS ───────────────────────────────────────────── */
-  .perks {
-    margin: 56px auto 0;
-    max-width: 620px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border-top: 1px solid var(--line);
-  }
-  .perk {
-    padding: 28px 18px 4px;
-    border-right: 1px solid var(--line);
-    display: flex; flex-direction: column; align-items: center; gap: 12px;
-    text-align: center;
-  }
-  .perk:last-child { border-right: 0; }
-  .perk .glyph {
-    width: 30px; height: 30px; color: var(--accent);
-  }
-  .perk h3 {
-    margin: 0; font-family: var(--serif); font-weight: 400;
-    font-size: 17px; line-height: 1.2; letter-spacing: -0.01em; color: var(--ink);
-  }
-  .perk p {
-    margin: 0; font-family: var(--mono); font-size: 10px;
-    text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted);
+    letter-spacing: 0.02em;
   }
 
-  /* ─── FOOTER ──────────────────────────────────────────── */
+  /* ─── FOOTER ──────────────────────────────────────────────── */
   footer {
-    padding: 28px 0 36px;
+    padding: 36px 0 48px;
     display: flex; justify-content: space-between; align-items: center;
     font-family: var(--mono); font-size: 11px;
     color: var(--muted);
     text-transform: uppercase; letter-spacing: 0.1em;
-    border-top: 1px solid var(--line);
   }
   footer .links { display: flex; gap: 24px; }
   footer a { text-decoration: none; }
   footer a:hover { color: var(--ink); }
 
-  @media (max-width: 720px) {
-    .container { padding: 0 28px; }
-    h1 { font-size: clamp(34px, 8vw, 52px); }
-    .lede { font-size: 16px; }
-    .perks { max-width: 100%; }
-    .perk { padding: 22px 8px 4px; }
+  /* ─── MOBILE RESPONSIVE ──────────────────────────── */
+  @media (max-width: 900px) {
+    .container { padding: 0 32px; }
+
+    .hero {
+      padding: 56px 0 56px;
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    .hero-right { min-height: 320px; }
+    .hero .lede { max-width: 100%; }
+
+    .checkin-wrap {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .checkin-wrap > :first-child { order: 2; }
+    .checkin-wrap > :last-child  { order: 1; }
+
+    .results-stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .stat:nth-child(2)  { border-right: 0; }
+    .stat:nth-child(3)  { border-right: 1px solid var(--line); padding-left: 0; }
+    .stat:nth-child(4)  { padding-left: 16px; }
+
+    .grid-protocols {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 640px) {
     .container { padding: 0 18px; }
-    .nav { padding: 18px 0 16px; }
+
+    .nav { padding: 16px 0 14px; gap: 10px; flex-wrap: wrap; }
+    .nav-links { gap: 14px; font-size: 13px; }
     .beta-pill { display: none; }
-    h1 { font-size: clamp(30px, 9vw, 44px); margin-bottom: 16px; }
-    .lede { font-size: 15px; }
-    .body { font-size: 15px; }
+
+    .hero {
+      padding: 40px 0 44px;
+      gap: 36px;
+    }
+    .hero h1 { font-size: clamp(32px, 8vw, 48px); margin: 14px 0 14px; }
+    .hero .lede { font-size: 16px; }
+    .hero-cta { flex-wrap: wrap; gap: 10px; }
+    .btn { padding: 12px 18px; font-size: 14px; }
+    .hero-right { min-height: 0; }
+
+    section.block { padding: 56px 0; }
+
+    .steps {
+      grid-template-columns: 1fr;
+      margin-top: 32px;
+    }
+    .step { padding: 24px 0; border-right: 0; border-bottom: 1px solid var(--line); }
+    .step:last-child { border-bottom: 0; }
+    .step:not(:first-child) { padding-left: 0; }
+
+    .grid-protocols { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 24px; }
+    .protocol { min-height: 0; padding: 14px 14px 16px; gap: 6px; }
+    .protocol h4 { font-size: 17px; }
+    .protocol .glyph { width: 20px; height: 20px; right: 12px; top: 12px; }
+
+    .checkin-wrap { gap: 28px; margin-top: 36px; }
+    .card { padding: 20px; }
+    .q-title { font-size: 22px; }
+
+    .scale { grid-template-columns: repeat(5, 1fr); gap: 5px; }
+    .scale button { height: 44px; font-size: 13px; }
+
+    .results-stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 32px;
+    }
+    .stat { padding: 18px 12px 16px 0; }
+    .stat:not(:first-child) { padding-left: 12px; }
+    .stat .v { font-size: 32px; }
+    .stat:nth-child(2) { border-right: 0; }
+    .stat:nth-child(3) { border-right: 1px solid var(--line); padding-left: 0; }
+    .stat:nth-child(4) { padding-left: 12px; }
+
+    .chart-wrap { padding: 20px 16px 18px; margin-top: 32px; }
+    .chart { height: 200px; }
+    .chart-head { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .chart-head h4 { font-size: 20px; }
+
+    .insights { grid-template-columns: 1fr; }
+    .insight { border-right: 0; padding: 16px 0; border-bottom: 1px solid var(--line); }
+    .insight:last-child { border-bottom: 0; padding-left: 0; padding-right: 0; }
+
+    .cta { padding: 64px 0 72px; }
+    .cta h2 { font-size: clamp(32px, 7vw, 44px); }
     .cta-form {
       flex-direction: column;
       padding: 14px 16px;
       border-radius: 16px;
       gap: 10px;
+      max-width: 100%;
     }
     .cta-form input { padding: 4px 0; }
-    .btn { width: 100%; justify-content: center; }
-    .confirmed { flex-direction: column; text-align: center; border-radius: 16px; }
-    .perks {
-      grid-template-columns: 1fr;
-      max-width: 320px;
-    }
-    .perk { border-right: 0; border-bottom: 1px solid var(--line); padding: 20px 8px; }
-    .perk:last-child { border-bottom: 0; }
-    footer { flex-direction: column; gap: 12px; align-items: flex-start; padding: 20px 0 28px; }
+    .cta-form .btn-primary { width: 100%; justify-content: center; }
+
+    footer { flex-direction: column; gap: 14px; align-items: flex-start; padding: 24px 0 36px; }
   }
 </style>
 </head>
@@ -328,120 +667,1447 @@
 
 
 
+<div id="app"></div>
 
-<header class="container">
-  <nav class="nav">
-    <div class="brand">
-      <span class="brand-mark"></span>
-      <span>Roote</span>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+
+// tweaks-panel.jsx
+// Reusable Tweaks shell + form-control helpers.
+//
+// Owns the host protocol (listens for __activate_edit_mode / __deactivate_edit_mode,
+// posts __edit_mode_available / __edit_mode_set_keys / __edit_mode_dismissed) so
+// individual prototypes don't re-roll it. Ships a consistent set of controls so you
+// don't hand-draw <input type="range">, segmented radios, steppers, etc.
+//
+// Usage (in an HTML file that loads React + Babel):
+//
+//   const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+//     "primaryColor": "#D97757",
+//     "palette": ["#D97757", "#29261b", "#f6f4ef"],
+//     "fontSize": 16,
+//     "density": "regular",
+//     "dark": false
+//   }/*EDITMODE-END*/;
+//
+//   function App() {
+//     const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+//     return (
+//       <div style={{ fontSize: t.fontSize, color: t.primaryColor }}>
+//         Hello
+//         <TweaksPanel>
+//           <TweakSection label="Typography" />
+//           <TweakSlider label="Font size" value={t.fontSize} min={10} max={32} unit="px"
+//                        onChange={(v) => setTweak('fontSize', v)} />
+//           <TweakRadio  label="Density" value={t.density}
+//                        options={['compact', 'regular', 'comfy']}
+//                        onChange={(v) => setTweak('density', v)} />
+//           <TweakSection label="Theme" />
+//           <TweakColor  label="Primary" value={t.primaryColor}
+//                        options={['#D97757', '#2A6FDB', '#1F8A5B', '#7A5AE0']}
+//                        onChange={(v) => setTweak('primaryColor', v)} />
+//           <TweakColor  label="Palette" value={t.palette}
+//                        options={[['#D97757', '#29261b', '#f6f4ef'],
+//                                  ['#475569', '#0f172a', '#f1f5f9']]}
+//                        onChange={(v) => setTweak('palette', v)} />
+//           <TweakToggle label="Dark mode" value={t.dark}
+//                        onChange={(v) => setTweak('dark', v)} />
+//         </TweaksPanel>
+//       </div>
+//     );
+//   }
+//
+// ─────────────────────────────────────────────────────────────────────────────
+
+const __TWEAKS_STYLE = `
+  .twk-panel{position:fixed;right:16px;bottom:16px;z-index:2147483646;width:280px;
+    max-height:calc(100vh - 32px);display:flex;flex-direction:column;
+    transform:scale(var(--dc-inv-zoom,1));transform-origin:bottom right;
+    background:rgba(250,249,247,.78);color:#29261b;
+    -webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%);
+    border:.5px solid rgba(255,255,255,.6);border-radius:14px;
+    box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 12px 40px rgba(0,0,0,.18);
+    font:11.5px/1.4 ui-sans-serif,system-ui,-apple-system,sans-serif;overflow:hidden}
+  .twk-hd{display:flex;align-items:center;justify-content:space-between;
+    padding:10px 8px 10px 14px;cursor:move;user-select:none}
+  .twk-hd b{font-size:12px;font-weight:600;letter-spacing:.01em}
+  .twk-x{appearance:none;border:0;background:transparent;color:rgba(41,38,27,.55);
+    width:22px;height:22px;border-radius:6px;cursor:default;font-size:13px;line-height:1}
+  .twk-x:hover{background:rgba(0,0,0,.06);color:#29261b}
+  .twk-body{padding:2px 14px 14px;display:flex;flex-direction:column;gap:10px;
+    overflow-y:auto;overflow-x:hidden;min-height:0;
+    scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.15) transparent}
+  .twk-body::-webkit-scrollbar{width:8px}
+  .twk-body::-webkit-scrollbar-track{background:transparent;margin:2px}
+  .twk-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:4px;
+    border:2px solid transparent;background-clip:content-box}
+  .twk-body::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,.25);
+    border:2px solid transparent;background-clip:content-box}
+  .twk-row{display:flex;flex-direction:column;gap:5px}
+  .twk-row-h{flex-direction:row;align-items:center;justify-content:space-between;gap:10px}
+  .twk-lbl{display:flex;justify-content:space-between;align-items:baseline;
+    color:rgba(41,38,27,.72)}
+  .twk-lbl>span:first-child{font-weight:500}
+  .twk-val{color:rgba(41,38,27,.5);font-variant-numeric:tabular-nums}
+
+  .twk-sect{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    color:rgba(41,38,27,.45);padding:10px 0 0}
+  .twk-sect:first-child{padding-top:0}
+
+  .twk-field{appearance:none;box-sizing:border-box;width:100%;min-width:0;height:26px;padding:0 8px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:7px;
+    background:rgba(255,255,255,.6);color:inherit;font:inherit;outline:none}
+  .twk-field:focus{border-color:rgba(0,0,0,.25);background:rgba(255,255,255,.85)}
+  select.twk-field{padding-right:22px;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='rgba(0,0,0,.5)' d='M0 0h10L5 6z'/></svg>");
+    background-repeat:no-repeat;background-position:right 8px center}
+
+  .twk-slider{appearance:none;-webkit-appearance:none;width:100%;height:4px;margin:6px 0;
+    border-radius:999px;background:rgba(0,0,0,.12);outline:none}
+  .twk-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
+    width:14px;height:14px;border-radius:50%;background:#fff;
+    border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
+  .twk-slider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;
+    background:#fff;border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
+
+  .twk-seg{position:relative;display:flex;padding:2px;border-radius:8px;
+    background:rgba(0,0,0,.06);user-select:none}
+  .twk-seg-thumb{position:absolute;top:2px;bottom:2px;border-radius:6px;
+    background:rgba(255,255,255,.9);box-shadow:0 1px 2px rgba(0,0,0,.12);
+    transition:left .15s cubic-bezier(.3,.7,.4,1),width .15s}
+  .twk-seg.dragging .twk-seg-thumb{transition:none}
+  .twk-seg button{appearance:none;position:relative;z-index:1;flex:1;border:0;
+    background:transparent;color:inherit;font:inherit;font-weight:500;min-height:22px;
+    border-radius:6px;cursor:default;padding:4px 6px;line-height:1.2;
+    overflow-wrap:anywhere}
+
+  .twk-toggle{position:relative;width:32px;height:18px;border:0;border-radius:999px;
+    background:rgba(0,0,0,.15);transition:background .15s;cursor:default;padding:0}
+  .twk-toggle[data-on="1"]{background:#34c759}
+  .twk-toggle i{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;
+    background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
+  .twk-toggle[data-on="1"] i{transform:translateX(14px)}
+
+  .twk-num{display:flex;align-items:center;box-sizing:border-box;min-width:0;height:26px;padding:0 0 0 8px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:7px;background:rgba(255,255,255,.6)}
+  .twk-num-lbl{font-weight:500;color:rgba(41,38,27,.6);cursor:ew-resize;
+    user-select:none;padding-right:8px}
+  .twk-num input{flex:1;min-width:0;height:100%;border:0;background:transparent;
+    font:inherit;font-variant-numeric:tabular-nums;text-align:right;padding:0 8px 0 0;
+    outline:none;color:inherit;-moz-appearance:textfield}
+  .twk-num input::-webkit-inner-spin-button,.twk-num input::-webkit-outer-spin-button{
+    -webkit-appearance:none;margin:0}
+  .twk-num-unit{padding-right:8px;color:rgba(41,38,27,.45)}
+
+  .twk-btn{appearance:none;height:26px;padding:0 12px;border:0;border-radius:7px;
+    background:rgba(0,0,0,.78);color:#fff;font:inherit;font-weight:500;cursor:default}
+  .twk-btn:hover{background:rgba(0,0,0,.88)}
+  .twk-btn.secondary{background:rgba(0,0,0,.06);color:inherit}
+  .twk-btn.secondary:hover{background:rgba(0,0,0,.1)}
+
+  .twk-swatch{appearance:none;-webkit-appearance:none;width:56px;height:22px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:6px;padding:0;cursor:default;
+    background:transparent;flex-shrink:0}
+  .twk-swatch::-webkit-color-swatch-wrapper{padding:0}
+  .twk-swatch::-webkit-color-swatch{border:0;border-radius:5.5px}
+  .twk-swatch::-moz-color-swatch{border:0;border-radius:5.5px}
+
+  .twk-chips{display:flex;gap:6px}
+  .twk-chip{position:relative;appearance:none;flex:1;min-width:0;height:46px;
+    padding:0;border:0;border-radius:6px;overflow:hidden;cursor:default;
+    box-shadow:0 0 0 .5px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.06);
+    transition:transform .12s cubic-bezier(.3,.7,.4,1),box-shadow .12s}
+  .twk-chip:hover{transform:translateY(-1px);
+    box-shadow:0 0 0 .5px rgba(0,0,0,.18),0 4px 10px rgba(0,0,0,.12)}
+  .twk-chip[data-on="1"]{box-shadow:0 0 0 1.5px rgba(0,0,0,.85),
+    0 2px 6px rgba(0,0,0,.15)}
+  .twk-chip>span{position:absolute;top:0;bottom:0;right:0;width:34%;
+    display:flex;flex-direction:column;box-shadow:-1px 0 0 rgba(0,0,0,.1)}
+  .twk-chip>span>i{flex:1;box-shadow:0 -1px 0 rgba(0,0,0,.1)}
+  .twk-chip>span>i:first-child{box-shadow:none}
+  .twk-chip svg{position:absolute;top:6px;left:6px;width:13px;height:13px;
+    filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
+`;
+
+// ── useTweaks ───────────────────────────────────────────────────────────────
+// Single source of truth for tweak values. setTweak persists via the host
+// (__edit_mode_set_keys → host rewrites the EDITMODE block on disk).
+function useTweaks(defaults) {
+  const [values, setValues] = React.useState(defaults);
+  // Accepts either setTweak('key', value) or setTweak({ key: value, ... }) so a
+  // useState-style call doesn't write a "[object Object]" key into the persisted
+  // JSON block.
+  const setTweak = React.useCallback((keyOrEdits, val) => {
+    const edits = typeof keyOrEdits === 'object' && keyOrEdits !== null
+      ? keyOrEdits : { [keyOrEdits]: val };
+    setValues((prev) => ({ ...prev, ...edits }));
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits }, '*');
+    // Same-window signal so in-page listeners (deck-stage rail thumbnails)
+    // can react — the parent message only reaches the host, not peers.
+    window.dispatchEvent(new CustomEvent('tweakchange', { detail: edits }));
+  }, []);
+  return [values, setTweak];
+}
+
+// ── TweaksPanel ─────────────────────────────────────────────────────────────
+// Floating shell. Registers the protocol listener BEFORE announcing
+// availability — if the announce ran first, the host's activate could land
+// before our handler exists and the toolbar toggle would silently no-op.
+// The close button posts __edit_mode_dismissed so the host's toolbar toggle
+// flips off in lockstep; the host echoes __deactivate_edit_mode back which
+// is what actually hides the panel.
+function TweaksPanel({ title = 'Tweaks', noDeckControls = false, children }) {
+  const [open, setOpen] = React.useState(false);
+  const dragRef = React.useRef(null);
+  // Auto-inject a rail toggle when a <deck-stage> is on the page. The
+  // toggle drives the deck's per-viewer _railVisible via window message;
+  // state is mirrored from the same localStorage key the deck reads so
+  // the control reflects reality across reloads. The mechanism is the
+  // message — authors who want custom placement can post it directly
+  // and pass noDeckControls to suppress this one.
+  const hasDeckStage = React.useMemo(
+    () => typeof document !== 'undefined' && !!document.querySelector('deck-stage'),
+    [],
+  );
+  // deck-stage enables its rail in connectedCallback, but this panel can
+  // mount before that element has upgraded. The initial read catches the
+  // common case; the listener covers mounting first. (Older deck-stage.js
+  // copies still wait for the host's __omelette_rail_enabled postMessage —
+  // same listener handles those.)
+  const [railEnabled, setRailEnabled] = React.useState(
+    () => hasDeckStage && !!document.querySelector('deck-stage')?._railEnabled,
+  );
+  React.useEffect(() => {
+    if (!hasDeckStage || railEnabled) return undefined;
+    const onMsg = (e) => {
+      if (e.data && e.data.type === '__omelette_rail_enabled') setRailEnabled(true);
+    };
+    window.addEventListener('message', onMsg);
+    return () => window.removeEventListener('message', onMsg);
+  }, [hasDeckStage, railEnabled]);
+  const [railVisible, setRailVisible] = React.useState(() => {
+    try { return localStorage.getItem('deck-stage.railVisible') !== '0'; } catch (e) { return true; }
+  });
+  const toggleRail = (on) => {
+    setRailVisible(on);
+    window.postMessage({ type: '__deck_rail_visible', on }, '*');
+  };
+  const offsetRef = React.useRef({ x: 16, y: 16 });
+  const PAD = 16;
+
+  const clampToViewport = React.useCallback(() => {
+    const panel = dragRef.current;
+    if (!panel) return;
+    const w = panel.offsetWidth, h = panel.offsetHeight;
+    const maxRight = Math.max(PAD, window.innerWidth - w - PAD);
+    const maxBottom = Math.max(PAD, window.innerHeight - h - PAD);
+    offsetRef.current = {
+      x: Math.min(maxRight, Math.max(PAD, offsetRef.current.x)),
+      y: Math.min(maxBottom, Math.max(PAD, offsetRef.current.y)),
+    };
+    panel.style.right = offsetRef.current.x + 'px';
+    panel.style.bottom = offsetRef.current.y + 'px';
+  }, []);
+
+  React.useEffect(() => {
+    if (!open) return;
+    clampToViewport();
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', clampToViewport);
+      return () => window.removeEventListener('resize', clampToViewport);
+    }
+    const ro = new ResizeObserver(clampToViewport);
+    ro.observe(document.documentElement);
+    return () => ro.disconnect();
+  }, [open, clampToViewport]);
+
+  React.useEffect(() => {
+    const onMsg = (e) => {
+      const t = e?.data?.type;
+      if (t === '__activate_edit_mode') setOpen(true);
+      else if (t === '__deactivate_edit_mode') setOpen(false);
+    };
+    window.addEventListener('message', onMsg);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', onMsg);
+  }, []);
+
+  const dismiss = () => {
+    setOpen(false);
+    window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*');
+  };
+
+  const onDragStart = (e) => {
+    const panel = dragRef.current;
+    if (!panel) return;
+    const r = panel.getBoundingClientRect();
+    const sx = e.clientX, sy = e.clientY;
+    const startRight = window.innerWidth - r.right;
+    const startBottom = window.innerHeight - r.bottom;
+    const move = (ev) => {
+      offsetRef.current = {
+        x: startRight - (ev.clientX - sx),
+        y: startBottom - (ev.clientY - sy),
+      };
+      clampToViewport();
+    };
+    const up = () => {
+      window.removeEventListener('mousemove', move);
+      window.removeEventListener('mouseup', up);
+    };
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', up);
+  };
+
+  if (!open) return null;
+  return (
+    <>
+      <style>{__TWEAKS_STYLE}</style>
+      <div ref={dragRef} className="twk-panel" data-noncommentable=""
+           style={{ right: offsetRef.current.x, bottom: offsetRef.current.y }}>
+        <div className="twk-hd" onMouseDown={onDragStart}>
+          <b>{title}</b>
+          <button className="twk-x" aria-label="Close tweaks"
+                  onMouseDown={(e) => e.stopPropagation()}
+                  onClick={dismiss}>✕</button>
+        </div>
+        <div className="twk-body">
+          {children}
+          {hasDeckStage && railEnabled && !noDeckControls && (
+            <TweakSection label="Deck">
+              <TweakToggle label="Thumbnail rail" value={railVisible} onChange={toggleRail} />
+            </TweakSection>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
+
+// ── Layout helpers ──────────────────────────────────────────────────────────
+
+function TweakSection({ label, children }) {
+  return (
+    <>
+      <div className="twk-sect">{label}</div>
+      {children}
+    </>
+  );
+}
+
+function TweakRow({ label, value, children, inline = false }) {
+  return (
+    <div className={inline ? 'twk-row twk-row-h' : 'twk-row'}>
+      <div className="twk-lbl">
+        <span>{label}</span>
+        {value != null && <span className="twk-val">{value}</span>}
+      </div>
+      {children}
     </div>
-    <span class="beta-pill">Founding cohort · Full</span>
-  </nav>
-</header>
+  );
+}
 
-<main>
-  <div class="motif">
-    <div class="mark-glow"></div>
-    <svg class="rings" viewBox="0 0 920 920" fill="none" aria-hidden="true">
-      <circle cx="460" cy="460" r="120" stroke="currentColor" stroke-width="1"></circle>
-      <circle cx="460" cy="460" r="220" stroke="currentColor" stroke-width="1"></circle>
-      <circle cx="460" cy="460" r="320" stroke="currentColor" stroke-width="1"></circle>
-      <circle cx="460" cy="460" r="420" stroke="currentColor" stroke-width="1"></circle>
+// ── Controls ────────────────────────────────────────────────────────────────
+
+function TweakSlider({ label, value, min = 0, max = 100, step = 1, unit = '', onChange }) {
+  return (
+    <TweakRow label={label} value={`${value}${unit}`}>
+      <input type="range" className="twk-slider" min={min} max={max} step={step}
+             value={value} onChange={(e) => onChange(Number(e.target.value))} />
+    </TweakRow>
+  );
+}
+
+function TweakToggle({ label, value, onChange }) {
+  return (
+    <div className="twk-row twk-row-h">
+      <div className="twk-lbl"><span>{label}</span></div>
+      <button type="button" className="twk-toggle" data-on={value ? '1' : '0'}
+              role="switch" aria-checked={!!value}
+              onClick={() => onChange(!value)}><i /></button>
+    </div>
+  );
+}
+
+function TweakRadio({ label, value, options, onChange }) {
+  const trackRef = React.useRef(null);
+  const [dragging, setDragging] = React.useState(false);
+  // The active value is read by pointer-move handlers attached for the lifetime
+  // of a drag — ref it so a stale closure doesn't fire onChange for every move.
+  const valueRef = React.useRef(value);
+  valueRef.current = value;
+
+  // Segments wrap mid-word once per-segment width runs out. The track is
+  // ~248px (280 panel − 28 body pad − 4 seg pad), each button loses 12px
+  // to its own padding, and 11.5px system-ui averages ~6.3px/char — so 2
+  // options fit ~16 chars each, 3 fit ~10. Past that (or >3 options), fall
+  // back to a dropdown rather than wrap.
+  const labelLen = (o) => String(typeof o === 'object' ? o.label : o).length;
+  const maxLen = options.reduce((m, o) => Math.max(m, labelLen(o)), 0);
+  const fitsAsSegments = maxLen <= ({ 2: 16, 3: 10 }[options.length] ?? 0);
+  if (!fitsAsSegments) {
+    // <select> emits strings — map back to the original option value so the
+    // fallback stays type-preserving (numbers, booleans) like the segment path.
+    const resolve = (s) => {
+      const m = options.find((o) => String(typeof o === 'object' ? o.value : o) === s);
+      return m === undefined ? s : typeof m === 'object' ? m.value : m;
+    };
+    return <TweakSelect label={label} value={value} options={options}
+                        onChange={(s) => onChange(resolve(s))} />;
+  }
+  const opts = options.map((o) => (typeof o === 'object' ? o : { value: o, label: o }));
+  const idx = Math.max(0, opts.findIndex((o) => o.value === value));
+  const n = opts.length;
+
+  const segAt = (clientX) => {
+    const r = trackRef.current.getBoundingClientRect();
+    const inner = r.width - 4;
+    const i = Math.floor(((clientX - r.left - 2) / inner) * n);
+    return opts[Math.max(0, Math.min(n - 1, i))].value;
+  };
+
+  const onPointerDown = (e) => {
+    setDragging(true);
+    const v0 = segAt(e.clientX);
+    if (v0 !== valueRef.current) onChange(v0);
+    const move = (ev) => {
+      if (!trackRef.current) return;
+      const v = segAt(ev.clientX);
+      if (v !== valueRef.current) onChange(v);
+    };
+    const up = () => {
+      setDragging(false);
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+
+  return (
+    <TweakRow label={label}>
+      <div ref={trackRef} role="radiogroup" onPointerDown={onPointerDown}
+           className={dragging ? 'twk-seg dragging' : 'twk-seg'}>
+        <div className="twk-seg-thumb"
+             style={{ left: `calc(2px + ${idx} * (100% - 4px) / ${n})`,
+                      width: `calc((100% - 4px) / ${n})` }} />
+        {opts.map((o) => (
+          <button key={o.value} type="button" role="radio" aria-checked={o.value === value}>
+            {o.label}
+          </button>
+        ))}
+      </div>
+    </TweakRow>
+  );
+}
+
+function TweakSelect({ label, value, options, onChange }) {
+  return (
+    <TweakRow label={label}>
+      <select className="twk-field" value={value} onChange={(e) => onChange(e.target.value)}>
+        {options.map((o) => {
+          const v = typeof o === 'object' ? o.value : o;
+          const l = typeof o === 'object' ? o.label : o;
+          return <option key={v} value={v}>{l}</option>;
+        })}
+      </select>
+    </TweakRow>
+  );
+}
+
+function TweakText({ label, value, placeholder, onChange }) {
+  return (
+    <TweakRow label={label}>
+      <input className="twk-field" type="text" value={value} placeholder={placeholder}
+             onChange={(e) => onChange(e.target.value)} />
+    </TweakRow>
+  );
+}
+
+function TweakNumber({ label, value, min, max, step = 1, unit = '', onChange }) {
+  const clamp = (n) => {
+    if (min != null && n < min) return min;
+    if (max != null && n > max) return max;
+    return n;
+  };
+  const startRef = React.useRef({ x: 0, val: 0 });
+  const onScrubStart = (e) => {
+    e.preventDefault();
+    startRef.current = { x: e.clientX, val: value };
+    const decimals = (String(step).split('.')[1] || '').length;
+    const move = (ev) => {
+      const dx = ev.clientX - startRef.current.x;
+      const raw = startRef.current.val + dx * step;
+      const snapped = Math.round(raw / step) * step;
+      onChange(clamp(Number(snapped.toFixed(decimals))));
+    };
+    const up = () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+  return (
+    <div className="twk-num">
+      <span className="twk-num-lbl" onPointerDown={onScrubStart}>{label}</span>
+      <input type="number" value={value} min={min} max={max} step={step}
+             onChange={(e) => onChange(clamp(Number(e.target.value)))} />
+      {unit && <span className="twk-num-unit">{unit}</span>}
+    </div>
+  );
+}
+
+// Relative-luminance contrast pick — checkmarks drawn over a swatch need to
+// read on both #111 and #fafafa without per-option configuration. Hex input
+// only (#rgb / #rrggbb); named or rgb()/hsl() colors fall through to "light".
+function __twkIsLight(hex) {
+  const h = String(hex).replace('#', '');
+  const x = h.length === 3 ? h.replace(/./g, (c) => c + c) : h.padEnd(6, '0');
+  const n = parseInt(x.slice(0, 6), 16);
+  if (Number.isNaN(n)) return true;
+  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  return r * 299 + g * 587 + b * 114 > 148000;
+}
+
+const __TwkCheck = ({ light }) => (
+  <svg viewBox="0 0 14 14" aria-hidden="true">
+    <path d="M3 7.2 5.8 10 11 4.2" fill="none" strokeWidth="2.2"
+          strokeLinecap="round" strokeLinejoin="round"
+          stroke={light ? 'rgba(0,0,0,.78)' : '#fff'} />
+  </svg>
+);
+
+// TweakColor — curated color/palette picker. Each option is either a single
+// hex string or an array of 1-5 hex strings; the card adapts — a lone color
+// renders solid, a palette renders colors[0] as the hero (left ~2/3) with the
+// rest stacked in a sharp column on the right. onChange emits the
+// option in the shape it was passed (string stays string, array stays array).
+// Without options it falls back to the native color input for back-compat.
+function TweakColor({ label, value, options, onChange }) {
+  if (!options || !options.length) {
+    return (
+      <div className="twk-row twk-row-h">
+        <div className="twk-lbl"><span>{label}</span></div>
+        <input type="color" className="twk-swatch" value={value}
+               onChange={(e) => onChange(e.target.value)} />
+      </div>
+    );
+  }
+  // Native <input type=color> emits lowercase hex per the HTML spec, so
+  // compare case-insensitively. String() guards JSON.stringify(undefined),
+  // which returns the primitive undefined (no .toLowerCase).
+  const key = (o) => String(JSON.stringify(o)).toLowerCase();
+  const cur = key(value);
+  return (
+    <TweakRow label={label}>
+      <div className="twk-chips" role="radiogroup">
+        {options.map((o, i) => {
+          const colors = Array.isArray(o) ? o : [o];
+          const [hero, ...rest] = colors;
+          const sup = rest.slice(0, 4);
+          const on = key(o) === cur;
+          return (
+            <button key={i} type="button" className="twk-chip" role="radio"
+                    aria-checked={on} data-on={on ? '1' : '0'}
+                    aria-label={colors.join(', ')} title={colors.join(' · ')}
+                    style={{ background: hero }}
+                    onClick={() => onChange(o)}>
+              {sup.length > 0 && (
+                <span>
+                  {sup.map((c, j) => <i key={j} style={{ background: c }} />)}
+                </span>
+              )}
+              {on && <__TwkCheck light={__twkIsLight(hero)} />}
+            </button>
+          );
+        })}
+      </div>
+    </TweakRow>
+  );
+}
+
+function TweakButton({ label, onClick, secondary = false }) {
+  return (
+    <button type="button" className={secondary ? 'twk-btn secondary' : 'twk-btn'}
+            onClick={onClick}>{label}</button>
+  );
+}
+
+Object.assign(window, {
+  useTweaks, TweaksPanel, TweakSection, TweakRow,
+  TweakSlider, TweakToggle, TweakRadio, TweakSelect,
+  TweakText, TweakNumber, TweakColor, TweakButton,
+});
+
+</script>
+<script type="text/babel">
+// Roote landing — interactive React app
+
+const { useState, useEffect, useMemo, useRef } = React;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Tweak defaults — persisted via the host protocol
+// ─────────────────────────────────────────────────────────────────────────────
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "palette": "moss",
+  "heroVariant": "default",
+  "showGridlines": true,
+  "denseProtocols": false
+}/*EDITMODE-END*/;
+
+const PALETTES = {
+  moss:   { accent: "oklch(0.44 0.075 145)", accent2: "oklch(0.62 0.075 145)", wash: "oklch(0.94 0.025 145)" },
+  copper: { accent: "oklch(0.56 0.13 50)",   accent2: "oklch(0.70 0.12 50)",   wash: "oklch(0.95 0.04 60)"   },
+  cobalt: { accent: "oklch(0.46 0.13 250)",  accent2: "oklch(0.62 0.11 250)",  wash: "oklch(0.94 0.03 245)"  },
+  ink:    { accent: "oklch(0.22 0.01 90)",   accent2: "oklch(0.40 0.012 90)",  wash: "oklch(0.93 0.005 85)"  },
+};
+
+const HERO_HEADLINES = {
+  default: ["What if you could actually ", <em key="e">see</em>, " whether your biohacker habits are working?"],
+  proof:   ["Stop ", <em key="e">guessing</em>, ". Start knowing what's working in your body."],
+  signal:  ["Your stack is loud. Find the ", <em key="e">signal</em>, " in 30 days."],
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Mini SVG glyphs for protocols (simple, geometric — no AI slop)
+// ─────────────────────────────────────────────────────────────────────────────
+const Glyph = ({ kind, color = "currentColor" }) => {
+  const s = { stroke: color, strokeWidth: 1, fill: "none", strokeLinecap: "round" };
+  const dot = (cx, cy, r = 1.5) => <circle cx={cx} cy={cy} r={r} fill={color} stroke="none" />;
+  switch (kind) {
+    case "redlight": return (
+      <svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="9" {...s} />
+        <circle cx="14" cy="14" r="5" {...s} opacity="0.6" />
+        <circle cx="14" cy="14" r="1.6" fill={color} /></svg>
+    );
+    case "cold": return (
+      <svg viewBox="0 0 28 28">
+        <path d="M14 4v20M5 9l18 10M5 19L23 9" {...s} />
+      </svg>
+    );
+    case "sauna": return (
+      <svg viewBox="0 0 28 28">
+        <path d="M5 22h18M7 22V11l7-5 7 5v11" {...s} />
+        <path d="M11 22v-5h6v5" {...s} opacity="0.6" />
+      </svg>
+    );
+    case "zone2": return (
+      <svg viewBox="0 0 28 28">
+        <path d="M3 17l5-7 4 5 4-9 4 11 5-3" {...s} />
+      </svg>
+    );
+    case "sleep": return (
+      <svg viewBox="0 0 28 28">
+        <path d="M22 16a8 8 0 1 1-10-10 6 6 0 0 0 10 10z" {...s} />
+      </svg>
+    );
+    case "vibration": return (
+      <svg viewBox="0 0 28 28">
+        <path d="M4 14h2M22 14h2M7 10h2M19 10h2M7 18h2M19 18h2" {...s} />
+        <rect x="11" y="9" width="6" height="10" rx="1" {...s} />
+      </svg>
+    );
+    case "hydration": return (
+      <svg viewBox="0 0 28 28">
+        <path d="M14 4c-4 6-6 9-6 12a6 6 0 0 0 12 0c0-3-2-6-6-12z" {...s} />
+      </svg>
+    );
+    case "supplement": return (
+      <svg viewBox="0 0 28 28">
+        <rect x="6" y="11" width="16" height="6" rx="3" {...s} />
+        <path d="M14 11v6" {...s} />
+      </svg>
+    );
+    case "sunlight": return (
+      <svg viewBox="0 0 28 28">
+        <circle cx="14" cy="14" r="4" {...s} />
+        <path d="M14 4v3M14 21v3M4 14h3M21 14h3M7 7l2 2M19 19l2 2M7 21l2-2M19 9l2-2" {...s} />
+      </svg>
+    );
+    case "hrv": return (
+      <svg viewBox="0 0 28 28">
+        <path d="M3 14h5l2-4 3 8 3-10 2 6h7" {...s} />
+      </svg>
+    );
+    case "pemf": return (
+      <svg viewBox="0 0 28 28">
+        <path d="M5 14a9 5 0 1 0 18 0a9 5 0 1 0 -18 0" {...s} />
+        <path d="M9 14a5 9 0 1 0 10 0a5 9 0 1 0 -10 0" {...s} opacity="0.5" />
+      </svg>
+    );
+    case "breath": return (
+      <svg viewBox="0 0 28 28">
+        <circle cx="14" cy="14" r="3" {...s} />
+        <circle cx="14" cy="14" r="7" {...s} opacity="0.6" />
+        <circle cx="14" cy="14" r="11" {...s} opacity="0.3" />
+      </svg>
+    );
+    default: return null;
+  }
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// HERO right-side preview — a stylized "phone-card" of the protocol
+// ─────────────────────────────────────────────────────────────────────────────
+function HeroPreview() {
+  return (
+    <div style={{ position: "relative", width: "100%", maxWidth: 460, marginLeft: "auto" }}>
+      {/* back card — protocol schedule */}
+      <div className="card" style={{
+        position: "absolute", inset: "auto 0 -30px -40px", width: 320,
+        transform: "rotate(-3.5deg)", padding: 22, opacity: 0.95
+      }}>
+        <div className="card-head" style={{ marginBottom: 14 }}>
+          <span>This week · M T W T F S S</span>
+          <span style={{ color: "var(--accent)" }}>v0.4</span>
+        </div>
+        <ScheduleStrip />
+      </div>
+
+      {/* front card — daily pulse */}
+      <div className="card" style={{ position: "relative", transform: "rotate(1.2deg)" }}>
+        <div className="card-head">
+          <span>Daily pulse · day 12</span>
+          <span className="live">Live</span>
+        </div>
+        <div className="q-label">Question 1 / 3</div>
+        <div className="q-title">How's your energy today?</div>
+        <ScaleRow defaultValue={8} />
+        <div className="scale-ends">
+          <span>← Exhausted</span>
+          <span>Best ever →</span>
+        </div>
+        <div className="card-foot">
+          <span className="mono" style={{ fontSize: 11, color: "var(--muted)", textTransform: "uppercase", letterSpacing: ".1em" }}>
+            12-day streak
+          </span>
+          <StreakDots count={12} active={11} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ScheduleStrip() {
+  const days = ["M", "T", "W", "T", "F", "S", "S"];
+  // each cell: list of small protocol blocks (color = accent intensity)
+  const plan = [
+    [{ k: "sunlight", l: "AM Sun" }, { k: "redlight", l: "Red 10m" }, { k: "zone2", l: "Z2 30m" }],
+    [{ k: "sunlight", l: "AM Sun" }, { k: "cold", l: "Cold" }],
+    [{ k: "sunlight", l: "AM Sun" }, { k: "sauna", l: "Sauna" }, { k: "redlight", l: "Red" }],
+    [{ k: "sunlight", l: "AM Sun" }, { k: "zone2", l: "Z2 45m" }],
+    [{ k: "sunlight", l: "AM Sun" }, { k: "cold", l: "Cold" }, { k: "breath", l: "Box 4×4" }],
+    [{ k: "sauna", l: "Sauna" }, { k: "redlight", l: "Red" }],
+    [{ k: "sunlight", l: "AM Sun" }, { k: "breath", l: "Box" }],
+  ];
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 6 }}>
+      {plan.map((day, i) => (
+        <div key={i} style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+          <div style={{
+            fontFamily: "var(--mono)", fontSize: 9.5, color: "var(--muted)",
+            textAlign: "center", letterSpacing: ".06em"
+          }}>{days[i]}</div>
+          {day.map((b, j) => (
+            <div key={j} style={{
+              padding: "5px 4px", borderRadius: 4,
+              background: i === 1 ? "var(--accent)" : "var(--accent-wash)",
+              color: i === 1 ? "var(--paper)" : "var(--accent)",
+              fontFamily: "var(--mono)", fontSize: 8.5,
+              textAlign: "center", letterSpacing: ".03em",
+              border: "1px solid color-mix(in oklch, var(--accent) 25%, transparent)"
+            }}>{b.l}</div>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ScaleRow({ defaultValue = 7 }) {
+  const [v, setV] = useState(defaultValue);
+  return (
+    <div className="scale">
+      {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
+        <button key={n} className={n === v ? "active" : ""} onClick={() => setV(n)}>{n}</button>
+      ))}
+    </div>
+  );
+}
+
+function StreakDots({ count = 12, active = 11 }) {
+  return (
+    <div className="streak">
+      {Array.from({ length: count }, (_, i) => (
+        <i key={i} className={i === active ? "today" : i < active ? "on" : ""} />
+      ))}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// HOW IT WORKS — 3 steps
+// ─────────────────────────────────────────────────────────────────────────────
+function HowItWorks() {
+  return (
+    <section className="block">
+      <div className="container">
+        <span className="eyebrow">How it works</span>
+        <h2 className="section-title">Three steps. About six minutes total.</h2>
+        <p className="section-sub">You tell Roote what you're working toward. Roote sequences your stack and checks in daily to see what's actually moving the needle.</p>
+
+        <div className="steps">
+          <Step n="01" title="Tell us your goal and your gear"
+                body="Energy, sleep, longevity, cognition — and what you're working with: red light, vibration plate, sauna, CGM, wearable ring, or just your phone.">
+            <GoalArt />
+          </Step>
+          <Step n="02" title="Get a protocol built for you"
+                body="Roote generates a personalized daily and weekly schedule from a curated library of the most effective biohacker habits — sequenced for your life, not a generic template.">
+            <ScheduleArt />
+          </Step>
+          <Step n="03" title="Check in daily, see your trend"
+                body="Three quick questions every day. A deeper check-in each week. Roote shows you whether the protocol is actually moving the needle — in your own words.">
+            <TrendArt />
+          </Step>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Step({ n, title, body, children }) {
+  return (
+    <div className="step">
+      <div className="step-num"><b>STEP {n}</b></div>
+      <h3>{title}</h3>
+      <p>{body}</p>
+      <div className="step-art">{children}</div>
+    </div>
+  );
+}
+
+// little inline illustrations for each step
+function GoalArt() {
+  const tags = ["Energy", "Sleep", "Longevity", "Cognition"];
+  const gear = ["Red light", "Sauna", "CGM", "Ring", "Vibration plate"];
+  return (
+    <div style={{ padding: 14, display: "flex", flexDirection: "column", gap: 8, height: "100%" }}>
+      <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+        {tags.map((t, i) => (
+          <span key={t} style={{
+            fontFamily: "var(--mono)", fontSize: 10,
+            padding: "3px 8px", borderRadius: 999,
+            background: i === 0 ? "var(--accent)" : "transparent",
+            color: i === 0 ? "var(--paper)" : "var(--ink-2)",
+            border: i === 0 ? "1px solid var(--accent)" : "1px solid var(--line)"
+          }}>{t}</span>
+        ))}
+      </div>
+      <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+        {gear.map((g, i) => (
+          <span key={g} style={{
+            fontFamily: "var(--mono)", fontSize: 10,
+            padding: "3px 8px", borderRadius: 999,
+            background: "var(--bg)", color: "var(--ink-2)",
+            border: "1px solid var(--line)",
+            opacity: i < 2 ? 1 : 0.55
+          }}>{i < 2 && "✓ "}{g}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ScheduleArt() {
+  const blocks = [
+    [1, 2, 0, 1, 0, 1, 0],
+    [0, 1, 1, 0, 2, 0, 1],
+    [1, 0, 1, 2, 0, 1, 0],
+  ];
+  return (
+    <div style={{ padding: 14, height: "100%", display: "flex", flexDirection: "column", gap: 4, justifyContent: "center" }}>
+      {blocks.map((row, ri) => (
+        <div key={ri} style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 4 }}>
+          {row.map((v, ci) => (
+            <div key={ci} style={{
+              height: 14, borderRadius: 3,
+              background: v === 0 ? "var(--line-2)" : v === 1 ? "var(--accent-wash)" : "var(--accent)"
+            }} />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function TrendArt() {
+  // mini sparkline
+  const pts = [4.2, 4.5, 4.0, 4.8, 5.2, 5.0, 5.6, 6.2, 6.8, 7.2, 7.4, 7.6];
+  const w = 280, h = 70, pad = 8;
+  const min = 3.5, max = 8;
+  const xs = (i) => pad + (i / (pts.length - 1)) * (w - pad * 2);
+  const ys = (v) => h - pad - ((v - min) / (max - min)) * (h - pad * 2);
+  const d = pts.map((v, i) => `${i === 0 ? "M" : "L"}${xs(i).toFixed(1)} ${ys(v).toFixed(1)}`).join(" ");
+  return (
+    <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" style={{ width: "100%", height: "100%", padding: 12 }}>
+      <line x1={pad} x2={w - pad} y1={ys(min) - 2} y2={ys(min) - 2} stroke="var(--line)" strokeWidth="1" />
+      <path d={d} stroke="var(--accent)" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      {pts.map((v, i) => (
+        <circle key={i} cx={xs(i)} cy={ys(v)} r={i === pts.length - 1 ? 3 : 1.5}
+                fill={i === pts.length - 1 ? "var(--accent)" : "var(--paper)"}
+                stroke="var(--accent)" strokeWidth="1" />
+      ))}
     </svg>
-  </div>
+  );
+}
 
-  <div class="container">
-    <div class="panel">
-      <span class="eyebrow">Beta · founding cohort closed</span>
-      <h1>Beta is full — but you're <em>next</em>.</h1>
-      <p class="lede">We hit our founding cohort limit faster than expected. Drop your email and you'll be first in line when we open the next wave.</p>
+// ─────────────────────────────────────────────────────────────────────────────
+// PROTOCOL LIBRARY (12)
+// ─────────────────────────────────────────────────────────────────────────────
+const PROTOCOLS = [
+  { i: "P01", name: "Red light therapy",  glyph: "redlight",   tag: "10 min · AM" },
+  { i: "P02", name: "Cold exposure",      glyph: "cold",       tag: "3 min · 50°F" },
+  { i: "P03", name: "Sauna protocol",     glyph: "sauna",      tag: "20 min · 4×/wk" },
+  { i: "P04", name: "Zone 2 cardio",      glyph: "zone2",      tag: "45 min · 3×/wk" },
+  { i: "P05", name: "Sleep hygiene stack",glyph: "sleep",      tag: "Bed by 22:30" },
+  { i: "P06", name: "Vibration plate",    glyph: "vibration",  tag: "10 min · daily" },
+  { i: "P07", name: "Hydration timing",   glyph: "hydration",  tag: "Pre-meal · 16oz" },
+  { i: "P08", name: "Supplement stack",   glyph: "supplement", tag: "AM + PM" },
+  { i: "P09", name: "Morning sunlight",   glyph: "sunlight",   tag: "10 min · ≤30m wake" },
+  { i: "P10", name: "HRV check-in",       glyph: "hrv",        tag: "Auto · via ring" },
+  { i: "P11", name: "PEMF therapy",       glyph: "pemf",       tag: "20 min · evening" },
+  { i: "P12", name: "Breathwork",         glyph: "breath",     tag: "Box 4×4 · 5 min" },
+];
 
-      <div class="cohort">
-        <div class="cohort-row">
-          <span>Founding cohort</span>
-          <span class="count tnum">200 / 200 · <b>Full</b></span>
+function ProtocolLibrary() {
+  return (
+    <section className="block">
+      <div className="container">
+        <span className="eyebrow">Protocol library</span>
+        <h2 className="section-title">A curated set of habits worth tracking.</h2>
+        <p className="section-sub">Roote schedules these around your goal — you don't have to figure out the order, the dose, or the timing.</p>
+        <div className="grid-protocols">
+          {PROTOCOLS.map((p) => (
+            <div key={p.i} className="protocol">
+              <div className="protocol-i">{p.i}</div>
+              <div className="glyph" style={{ color: "var(--accent)" }}><Glyph kind={p.glyph} /></div>
+              <h4>{p.name}</h4>
+              <div className="tag">{p.tag}</div>
+            </div>
+          ))}
         </div>
-        <div class="cohort-track"><div class="cohort-fill"></div></div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CHECK-IN DEMO
+// ─────────────────────────────────────────────────────────────────────────────
+const QUESTIONS = [
+  { label: "Energy", q: "How's your energy today?",     left: "Exhausted",  right: "Best ever" },
+  { label: "Focus",  q: "How sharp do you feel?",        left: "Foggy",      right: "Razor sharp" },
+  { label: "Sleep",  q: "How rested do you feel?",       left: "Wiped",      right: "Fully rested" },
+];
+
+function CheckinDemo() {
+  const [qi, setQi] = useState(0);
+  const [answers, setAnswers] = useState([8, null, null]);
+  const q = QUESTIONS[qi];
+
+  const setAnswer = (v) => {
+    const next = [...answers];
+    next[qi] = v;
+    setAnswers(next);
+    if (qi < QUESTIONS.length - 1) setTimeout(() => setQi(qi + 1), 350);
+  };
+
+  return (
+    <section className="block">
+      <div className="container">
+        <span className="eyebrow">Daily pulse</span>
+        <h2 className="section-title">The check-in that actually tells you something.</h2>
+        <p className="section-sub">Three quick questions every day, plus a weekly deep-dive. After three weeks Roote surfaces the patterns from your answers and shows you what's moving the needle — in your own words.</p>
+
+        <div className="checkin-wrap">
+          <div className="card" style={{ maxWidth: 520 }}>
+            <div className="card-head">
+              <span>Daily pulse · day 12</span>
+              <span className="live">Live</span>
+            </div>
+            <div style={{ display: "flex", gap: 6, marginBottom: 22 }}>
+              {QUESTIONS.map((qq, i) => (
+                <div key={i} style={{
+                  flex: 1, height: 3, borderRadius: 2,
+                  background: i <= qi ? "var(--accent)" : "var(--line)"
+                }} />
+              ))}
+            </div>
+            <div className="q-label">{q.label} · question {qi + 1} of 3</div>
+            <div className="q-title">{q.q}</div>
+
+            <div className="scale">
+              {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
+                <button key={n} className={n === answers[qi] ? "active" : ""} onClick={() => setAnswer(n)}>{n}</button>
+              ))}
+            </div>
+            <div className="scale-ends">
+              <span>← {q.left}</span>
+              <span>{q.right} →</span>
+            </div>
+            <div className="card-foot">
+              <span className="mono" style={{ fontSize: 11, color: "var(--muted)", textTransform: "uppercase", letterSpacing: ".1em" }}>
+                avg · 45 sec
+              </span>
+              <button onClick={() => { setQi(0); setAnswers([8, null, null]); }}
+                      style={{
+                        appearance: "none", border: "0", background: "transparent",
+                        fontFamily: "var(--mono)", fontSize: 11, letterSpacing: ".1em",
+                        textTransform: "uppercase", color: "var(--accent)", cursor: "pointer"
+                      }}>↻ reset demo</button>
+            </div>
+          </div>
+
+          <div className="checkin-text">
+            <h3>Built for honesty, not streaks.</h3>
+            <p style={{ color: "var(--ink-2)", fontSize: 16, lineHeight: 1.6, margin: 0 }}>
+              No gamification tricks. No artificial badges. Just three questions tied to the metric you actually picked — answered fast enough to do every morning, sensitive enough to catch the protocol working.
+            </p>
+            <ul>
+              <li>Three core questions, rotated by goal — energy, focus, recovery, sleep, mood.</li>
+              <li>One free-text weekly journal — Roote pulls themes for you.</li>
+              <li>Optional wearable sync — Oura, Whoop, Apple Watch, Garmin.</li>
+              <li>No public leaderboards. Your data stays yours.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// RESULTS / CHART
+// ─────────────────────────────────────────────────────────────────────────────
+const ENERGY_30 = [
+  4.2, 4.5, 3.8, 4.6, 4.0, 4.4, 5.0,
+  4.8, 5.2, 5.0, 5.5, 5.3, 5.6, 5.4,
+  6.0, 6.4, 6.2, 7.0, 7.2, 6.8, 7.4,
+  7.0, 7.5, 7.3, 7.6, 7.4, 7.7, 7.5, 7.6, 7.6,
+];
+
+const DAY_NOTES = {
+  1:  "Day 1 baseline — protocol just kicked off.",
+  7:  "End of week 1. Sleep window still drifting late.",
+  12: "Added morning sunlight at wake-up.",
+  15: "Red light timing locked to 7:00 AM daily.",
+  18: "Biggest week-over-week jump.",
+  22: "Skipped red light. Score dropped 0.5.",
+  28: "Sustained — protocol holding.",
+  30: "Day 30. Plateau at 7.5+. Time to tune.",
+};
+
+function ResultsChart({ showGridlines }) {
+  const [hover, setHover] = useState(null);
+  const w = 1080, h = 320;
+  const padL = 44, padR = 16, padT = 28, padB = 36;
+  const innerW = w - padL - padR;
+  const innerH = h - padT - padB;
+  const min = 3, max = 9;
+  const xs = (i) => padL + (i / (ENERGY_30.length - 1)) * innerW;
+  const ys = (v) => padT + (1 - (v - min) / (max - min)) * innerH;
+
+  // area path
+  const linePath = ENERGY_30.map((v, i) => `${i === 0 ? "M" : "L"}${xs(i).toFixed(1)} ${ys(v).toFixed(1)}`).join(" ");
+  const areaPath = `${linePath} L${xs(ENERGY_30.length - 1).toFixed(1)} ${(padT + innerH).toFixed(1)} L${xs(0).toFixed(1)} ${(padT + innerH).toFixed(1)} Z`;
+
+  const xAxisDays = [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 30];
+  const yTicks = [3, 5, 7, 9];
+
+  // week-3 jump band (days 15-21 → indices 14-20)
+  const bandStart = xs(14), bandEnd = xs(20);
+
+  return (
+    <div className="chart-wrap">
+      <div className="chart-head">
+        <h4>Energy score — day 1 to day 30</h4>
+        <div className="meta">
+          <div>Scale: 1 (exhausted) → 10 (best ever)</div>
+          <div><b>Goal:</b> Sustained daily energy · <b>Gear:</b> Red light panel</div>
+        </div>
       </div>
 
-      <p class="body">We're keeping the beta small on purpose — we want to actually talk to the people using it. The next cohort opens in a few weeks. Everyone on this list gets priority access, plus a short survey to build your protocol before you even download the app.</p>
+      <div className="chart">
+        <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none"
+             style={{ width: "100%", height: "100%", display: "block", overflow: "visible" }}
+             onMouseLeave={() => setHover(null)}>
+          <defs>
+            <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"  stopColor="var(--accent)" stopOpacity="0.15" />
+              <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
+            </linearGradient>
+          </defs>
 
-      <div class="form-wrap">
-        <form class="cta-form" id="waitlist" novalidate="">
-          <input type="email" id="email" placeholder="you@email.com" autocomplete="email" required="">
-          <button type="submit" class="btn btn-primary">Save my spot →</button>
-        </form>
-        <div class="confirmed">
-          <span class="tick">
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.2 2.2 4.8-5" stroke="var(--paper)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-          </span>
-          <span>You're on the list — we'll be in touch.</span>
-        </div>
-        <p class="fineprint" id="fineprint">No spam. We'll only email you when your spot opens.</p>
+          {/* week-3 band */}
+          <rect x={bandStart} y={padT} width={bandEnd - bandStart} height={innerH}
+                fill="var(--accent-wash)" opacity="0.55" />
+          <text x={(bandStart + bandEnd) / 2} y={padT + 14}
+                fontFamily="var(--mono)" fontSize="10" fill="var(--accent)"
+                textAnchor="middle" letterSpacing="0.08em" style={{ textTransform: "uppercase" }}>
+            WEEK 3 — BIGGEST JUMP
+          </text>
+
+          {/* gridlines */}
+          {showGridlines && yTicks.map((t) => (
+            <line key={t} x1={padL} x2={w - padR} y1={ys(t)} y2={ys(t)}
+                  stroke="var(--line)" strokeWidth="1" strokeDasharray="2 4" />
+          ))}
+
+          {/* y labels */}
+          {yTicks.map((t) => (
+            <text key={t} x={padL - 10} y={ys(t) + 4}
+                  fontFamily="var(--mono)" fontSize="11" fill="var(--muted)"
+                  textAnchor="end">{t}</text>
+          ))}
+
+          {/* area + line */}
+          <path d={areaPath} fill="url(#area)" />
+          <path d={linePath} stroke="var(--accent)" strokeWidth="1.75"
+                fill="none" strokeLinecap="round" strokeLinejoin="round" />
+
+          {/* points */}
+          {ENERGY_30.map((v, i) => {
+            const isHover = hover === i;
+            const hasNote = !!DAY_NOTES[i + 1];
+            return (
+              <g key={i}>
+                {/* invisible hover target */}
+                <rect x={xs(i) - innerW / ENERGY_30.length / 2}
+                      y={padT} width={innerW / ENERGY_30.length} height={innerH}
+                      fill="transparent" onMouseEnter={() => setHover(i)} />
+                <circle cx={xs(i)} cy={ys(v)}
+                        r={isHover ? 5 : hasNote ? 3 : 2}
+                        fill={isHover ? "var(--accent)" : hasNote ? "var(--accent)" : "var(--paper)"}
+                        stroke="var(--accent)" strokeWidth="1.25" />
+              </g>
+            );
+          })}
+
+          {/* x labels */}
+          {xAxisDays.map((d) => (
+            <text key={d} x={xs(d - 1)} y={h - 14}
+                  fontFamily="var(--mono)" fontSize="11" fill="var(--muted)"
+                  textAnchor="middle">D{d}</text>
+          ))}
+
+          {/* hover tooltip */}
+          {hover !== null && (
+            <g>
+              <line x1={xs(hover)} x2={xs(hover)} y1={padT} y2={padT + innerH}
+                    stroke="var(--accent)" strokeWidth="1" strokeDasharray="2 3" opacity="0.5" />
+              {(() => {
+                const tx = Math.min(Math.max(xs(hover), padL + 100), w - padR - 100);
+                const ty = padT + 10;
+                const note = DAY_NOTES[hover + 1];
+                return (
+                  <g transform={`translate(${tx}, ${ty})`}>
+                    <rect x="-94" y="0" width="188" height={note ? 50 : 32}
+                          rx="6" fill="var(--ink)" />
+                    <text x="-84" y="16" fontFamily="var(--mono)" fontSize="11"
+                          fill="var(--paper)" letterSpacing="0.04em">
+                      D{hover + 1}  ·  {ENERGY_30[hover].toFixed(1)} / 10
+                    </text>
+                    {note && (
+                      <text x="-84" y="36" fontFamily="var(--sans)" fontSize="10.5"
+                            fill="oklch(0.85 0.01 90)">
+                        {note.length > 32 ? note.slice(0, 30) + "…" : note}
+                      </text>
+                    )}
+                  </g>
+                );
+              })()}
+            </g>
+          )}
+
+          {/* axis lines */}
+          <line x1={padL} x2={w - padR} y1={padT + innerH} y2={padT + innerH}
+                stroke="var(--line)" />
+        </svg>
       </div>
 
-      <div class="perks">
-        <div class="perk">
-          <span class="glyph">
-            <svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
-              <rect x="6" y="6" width="18" height="4.5" rx="2.25"></rect>
-              <rect x="6" y="13" width="13" height="4.5" rx="2.25"></rect>
-              <rect x="6" y="20" width="18" height="4.5" rx="2.25"></rect>
-              <circle cx="22.5" cy="15.25" r="1.4" fill="currentColor" stroke="none"></circle>
-            </svg>
-          </span>
-          <h3>Personalized protocol</h3>
-          <p>Built for your goals</p>
+      <div className="insights">
+        <div className="insight">
+          <span className="marker">1</span>
+          <p><b style={{ color: "var(--ink)", fontWeight: 500 }}>Red light days</b> score 1.4 points higher on average than non-red-light days.</p>
         </div>
-        <div class="perk">
-          <span class="glyph">
-            <svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 15h4l2.5-5 3.5 10 3-12 2.5 7H27"></path>
-            </svg>
-          </span>
-          <h3>Daily check-in</h3>
-          <p>Three quick questions</p>
-        </div>
-        <div class="perk">
-          <span class="glyph">
-            <svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 19l6-7 4 4 5-8 6 5"></path>
-              <circle cx="25" cy="13" r="1.6" fill="currentColor" stroke="none"></circle>
-            </svg>
-          </span>
-          <h3>Progress tracking</h3>
-          <p>See what's working</p>
+        <div className="insight">
+          <span className="marker">2</span>
+          <p><b style={{ color: "var(--ink)", fontWeight: 500 }}>Sleep before 11 PM</b> correlates with next-day energy scores above 7.</p>
         </div>
       </div>
     </div>
-  </div>
-</main>
+  );
+}
 
-<footer class="container">
-  <div>© 2026 Roote Labs · Made for people running their own n=1</div>
-  <div class="links">
-    <a href="#">Privacy</a>
-    <a href="#">Terms</a>
-    <a href="#">@tryroote</a>
-  </div>
-</footer>
+function Results({ showGridlines }) {
+  return (
+    <section className="block">
+      <div className="container">
+        <span className="eyebrow">Results</span>
+        <h2 className="section-title">What your results actually look like.</h2>
+        <p className="section-sub">Here's a real example — 30 days on the energy protocol, tracked entirely through daily check-ins. Hover any day to see what changed.</p>
 
-<script>
-  (function () {
-    var form = document.getElementById('waitlist');
-    var email = document.getElementById('email');
-    var fineprint = document.getElementById('fineprint');
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var v = (email.value || '').trim();
-      if (!v || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
-        email.focus();
-        return;
-      }
-      document.body.classList.add('is-confirmed');
-      fineprint.textContent = "Spot held for " + v;
-    });
-  })();
+        <div className="results-stats">
+          <div className="stat">
+            <div className="v">4.2 <small>→</small> <span className="delta">7.6</span></div>
+            <div className="lbl">Avg energy score</div>
+          </div>
+          <div className="stat">
+            <div className="v">81<small>%</small></div>
+            <div className="lbl">Protocol consistency</div>
+          </div>
+          <div className="stat">
+            <div className="v"><span className="delta">+2.1</span></div>
+            <div className="lbl">Avg sleep quality lift</div>
+          </div>
+          <div className="stat">
+            <div className="v">30<small>d</small></div>
+            <div className="lbl">First measurable signal</div>
+          </div>
+        </div>
+
+        <ResultsChart showGridlines={showGridlines} />
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// STORE BADGES — App Store + Google Play
+// ─────────────────────────────────────────────────────────────────────────────
+function StoreBadges() {
+  return (
+    <div style={{
+      display: "inline-flex",
+      gap: 14,
+      justifyContent: "center",
+      flexWrap: "wrap",
+      marginBottom: 4
+    }}>
+      <StoreBadge kind="ios" />
+      <StoreBadge kind="android" />
+    </div>
+  );
+}
+
+function StoreBadge({ kind }) {
+  const isIOS = kind === "ios";
+  return (
+    <a href="beta-full/index.html" style={{
+      display: "inline-flex",
+      alignItems: "center",
+      gap: 14,
+      padding: "14px 22px 14px 18px",
+      background: "var(--ink)",
+      color: "var(--paper)",
+      borderRadius: 14,
+      textDecoration: "none",
+      minWidth: 200,
+      boxShadow: "0 1px 0 rgba(255,255,255,.12) inset, 0 14px 30px -20px var(--ink)",
+      transition: "transform .15s ease, box-shadow .15s ease"
+    }}
+    onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; }}
+    onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; }}
+    onClick={() => { if (typeof fbq !== 'undefined') fbq('track', 'Lead', {content_name: isIOS ? 'AppStore' : 'GooglePlay'}); }}>
+      <div style={{ flexShrink: 0, width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        {isIOS ? <AppleLogo /> : <PlayLogo />}
+      </div>
+      <div style={{ textAlign: "left", lineHeight: 1 }}>
+        <div style={{
+          fontFamily: "var(--mono)",
+          fontSize: 9.5,
+          letterSpacing: "0.14em",
+          textTransform: "uppercase",
+          color: "oklch(0.78 0.01 90)",
+          marginBottom: 4
+        }}>
+          {isIOS ? "Download on the" : "Get it on"}
+        </div>
+        <div style={{
+          fontFamily: "var(--serif)",
+          fontSize: 19,
+          letterSpacing: "-0.01em",
+          color: "var(--paper)"
+        }}>
+          {isIOS ? "App Store" : "Google Play"}
+        </div>
+      </div>
+    </a>
+  );
+}
+
+function AppleLogo() {
+  return (
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true">
+      <path d="M17.05 12.54c-.03-2.94 2.4-4.36 2.51-4.43-1.37-2-3.5-2.27-4.26-2.3-1.82-.18-3.55 1.07-4.47 1.07-.93 0-2.36-1.05-3.88-1.02-2 .03-3.84 1.16-4.86 2.94-2.07 3.59-.53 8.9 1.49 11.81.99 1.42 2.16 3.02 3.7 2.96 1.48-.06 2.04-.96 3.83-.96 1.78 0 2.29.96 3.85.92 1.59-.03 2.6-1.45 3.57-2.88 1.13-1.65 1.59-3.26 1.61-3.34-.04-.02-3.08-1.18-3.11-4.69zM14.09 4.13c.82-.99 1.37-2.36 1.22-3.73-1.18.05-2.6.79-3.44 1.77-.76.87-1.42 2.26-1.24 3.6 1.32.1 2.65-.67 3.46-1.64z"/>
+    </svg>
+  );
+}
+
+function PlayLogo() {
+  // Stylized play triangle — monochrome to match the calm aesthetic
+  return (
+    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+      <path d="M3.6 1.8c-.36.36-.6.92-.6 1.62v17.16c0 .7.24 1.26.6 1.62l.1.08L13.4 12.5v-.2L3.7 1.7l-.1.1z" fill="oklch(0.75 0.01 90)"/>
+      <path d="M16.8 15.9l-3.4-3.4v-.2l3.4-3.4.08.04 4.04 2.3c1.15.65 1.15 1.72 0 2.38l-4.04 2.3-.08.04z" fill="oklch(0.85 0.01 90)"/>
+      <path d="M16.88 15.86L13.4 12.4 3.6 22.2c.38.4 1 .45 1.7.06l11.58-6.4z" fill="var(--paper)"/>
+      <path d="M16.88 8.94L5.3 2.54c-.7-.4-1.32-.35-1.7.06l9.8 9.8 3.48-3.46z" fill="oklch(0.92 0.01 90)"/>
+    </svg>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CTA
+// ─────────────────────────────────────────────────────────────────────────────
+function CTA() {
+  return (
+    <section className="cta">
+      <div className="container">
+        <span className="eyebrow" style={{ justifyContent: "center" }}>Beta access</span>
+        <h2>Download the beta — it's free.</h2>
+        <p>Available on iOS and Android. You'll get a short setup survey on first launch — we use it to build your starting protocol.</p>
+
+        <StoreBadges />
+
+        <div className="cta-meta">Free during beta · iOS 16+ · Android 12+</div>
+        <a href="#" className="cta-url">→ tryroote.com/beta</a>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// HEADER + APP
+// ─────────────────────────────────────────────────────────────────────────────
+function Header() {
+  return (
+    <header className="container">
+      <nav className="nav">
+        <div className="brand">
+          <span className="brand-mark" />
+          <span>Roote</span>
+        </div>
+        <div className="nav-links">
+          <a href="#how">How it works</a>
+          <a href="#protocols">Protocols</a>
+          <a href="#results">Results</a>
+          <a href="#beta" className="beta-pill">Beta · Free</a>
+        </div>
+      </nav>
+    </header>
+  );
+}
+
+function Hero({ heroVariant }) {
+  return (
+    <section className="container">
+      <div className="hero">
+        <div>
+          <span className="eyebrow">Beta · free early access</span>
+          <h1>{HERO_HEADLINES[heroVariant] || HERO_HEADLINES.default}</h1>
+          <p className="lede">
+            Roote gives you a personalized protocol based on your goals and gear — then tracks how you're actually feeling week by week, so you stop guessing and start knowing.
+          </p>
+          <div className="hero-cta">
+            <a href="#beta" className="btn btn-primary">Get the beta →</a>
+            <a href="#how" className="btn btn-ghost">See how it works</a>
+          </div>
+          <div className="hero-meta">
+            <span>NO CREDIT CARD</span>
+            <span>WEARABLE OPTIONAL</span>
+            <span>30-DAY SIGNAL</span>
+          </div>
+        </div>
+        <div className="hero-right"><HeroPreview /></div>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <div className="container">
+      <footer>
+        <div>© 2026 Roote Labs · Made for people running their own n=1</div>
+        <div className="links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">@tryroote</a>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+function App() {
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+  // apply palette → CSS variables on :root
+  useEffect(() => {
+    const p = PALETTES[t.palette] || PALETTES.moss;
+    document.documentElement.style.setProperty("--accent",      p.accent);
+    document.documentElement.style.setProperty("--accent-2",    p.accent2);
+    document.documentElement.style.setProperty("--accent-wash", p.wash);
+  }, [t.palette]);
+
+  return (
+    <>
+      <Header />
+      <Hero heroVariant={t.heroVariant} />
+      <div id="how"><HowItWorks /></div>
+      <div id="protocols"><ProtocolLibrary /></div>
+      <CheckinDemo />
+      <div id="results"><Results showGridlines={t.showGridlines} /></div>
+      <div id="beta"><CTA /></div>
+      <Footer />
+
+      <TweaksPanel>
+        <TweakSection label="Brand" />
+        <TweakColor
+          label="Accent palette"
+          value={(PALETTES[t.palette] || PALETTES.moss).accent}
+          options={Object.values(PALETTES).map(p => p.accent)}
+          onChange={(v) => {
+            const found = Object.keys(PALETTES).find(k => PALETTES[k].accent === v);
+            if (found) setTweak('palette', found);
+          }}
+        />
+
+        <TweakSection label="Hero copy" />
+        <TweakRadio
+          label="Headline"
+          value={t.heroVariant}
+          options={["default", "proof", "signal"]}
+          onChange={(v) => setTweak('heroVariant', v)}
+        />
+
+        <TweakSection label="Chart" />
+        <TweakToggle
+          label="Show gridlines"
+          value={t.showGridlines}
+          onChange={(v) => setTweak('showGridlines', v)}
+        />
+      </TweaksPanel>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("app")).render(<App />);
+
 </script>
 
 
