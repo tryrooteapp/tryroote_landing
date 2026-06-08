@@ -379,12 +379,14 @@ src="https://www.facebook.com/tr?id=1774947069974247&ev=PageView&noscript=1"
 
       <p class="body">Recovery is hard enough without fighting a broken app. We'd rather do this right than do it fast. Leave your email and we'll reach out personally when your spot opens — along with a short survey so your starting plan is ready the moment you download.</p>
 
-      <div class="form-wrap">
-        <form class="cta-form seva-form formkit-form" id="waitlist" action="https://app.kit.com/forms/9526594/subscriptions" method="post" data-sv-form="9526594" data-uid="ebf28efe6f" data-format="inline" data-version="5" novalidate="">
-          <input class="formkit-input" type="email" name="email_address" id="email" placeholder="you@email.com" autocomplete="email" required="">
+      <div id="mlb2-42335237" class="form-wrap ml-subscribe-form ml-subscribe-form-42335237">
+        <form class="cta-form row-form ml-block-form" action="https://assets.mailerlite.com/jsonp/2416548/forms/189705095874610481/subscribe" data-code="" method="post" target="_blank">
+          <input class="formkit-input" type="email" name="fields[email]" id="email" placeholder="you@email.com" autocomplete="email" aria-label="email" aria-required="true" required="">
+          <input type="hidden" name="ml-submit" value="1">
+          <input type="hidden" name="anticsrf" value="true">
           <button type="submit" data-element="submit" class="btn btn-primary">Keep my spot →</button>
         </form>
-        <div class="confirmed">
+        <div class="confirmed row-success" style="display:none;">
           <span class="tick">
             <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.2 2.2 4.8-5" stroke="var(--paper)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
           </span>
@@ -392,6 +394,17 @@ src="https://www.facebook.com/tr?id=1774947069974247&ev=PageView&noscript=1"
         </div>
         <p class="fineprint" id="fineprint">No spam, ever. Your information stays private.</p>
       </div>
+
+      <script>
+        function ml_webform_success_42335237() {
+          var $ = ml_jQuery || jQuery;
+          $('.ml-subscribe-form-42335237 .row-success').show();
+          $('.ml-subscribe-form-42335237 .row-form').hide();
+        }
+      </script>
+      <script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+      <script>fetch("https://assets.mailerlite.com/jsonp/2416548/forms/189705095874610481/takel")</script>
+
 
       <div class="perks">
         <div class="perk">
