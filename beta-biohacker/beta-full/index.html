@@ -459,7 +459,7 @@ src="https://www.facebook.com/tr?id=1774947069974247&ev=PageView&noscript=1"
 
       var btn = form.querySelector('button[type="submit"]');
       btn.disabled = true;
-      btn.querySelector('span').textContent = 'Saving…';
+      btn.textContent = 'Saving…';
 
       var body = new FormData();
       body.append('email_address', v);
@@ -479,7 +479,7 @@ src="https://www.facebook.com/tr?id=1774947069974247&ev=PageView&noscript=1"
       })
       .catch(function () {
         btn.disabled = false;
-        btn.querySelector('span').textContent = 'Save my spot →';
+        btn.textContent = 'Save my spot →';
         fineprint.textContent = 'Something went wrong — please try again.';
       });
     });
