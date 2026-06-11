@@ -380,13 +380,13 @@ src="https://www.facebook.com/tr?id=1774947069974247&ev=PageView&noscript=1"
       <p class="body">Recovery is hard enough without fighting a broken app. We'd rather do this right than do it fast. Leave your email and we'll reach out personally when your spot opens — along with a short survey so your starting plan is ready the moment you download.</p>
 
       <div id="mlb2-42335237" class="form-wrap ml-subscribe-form ml-subscribe-form-42335237">
-        <form class="cta-form row-form ml-block-form" action="https://assets.mailerlite.com/jsonp/2416548/forms/189705095874610481/subscribe" data-code="" method="post" target="_blank">
+        <form class="cta-form ml-block-form" action="https://assets.mailerlite.com/jsonp/2416548/forms/189705095874610481/subscribe" data-code="" method="post" target="_blank">
           <input class="formkit-input" type="email" name="fields[email]" id="email" placeholder="you@email.com" autocomplete="email" aria-label="email" aria-required="true" required="">
           <input type="hidden" name="ml-submit" value="1">
           <input type="hidden" name="anticsrf" value="true">
           <button type="submit" data-element="submit" class="btn btn-primary">Keep my spot →</button>
         </form>
-        <div class="confirmed row-success" style="display:none;">
+        <div class="confirmed">
           <span class="tick">
             <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.2 2.2 4.8-5" stroke="var(--paper)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
           </span>
@@ -397,9 +397,15 @@ src="https://www.facebook.com/tr?id=1774947069974247&ev=PageView&noscript=1"
 
       <script>
         function ml_webform_success_42335237() {
-          var $ = ml_jQuery || jQuery;
-          $('.ml-subscribe-form-42335237 .row-success').show();
-          $('.ml-subscribe-form-42335237 .row-form').hide();
+          document.body.classList.add('is-confirmed');
+          var fineprint = document.getElementById('fineprint');
+          var emailInput = document.getElementById('email');
+          if (fineprint && emailInput) {
+            fineprint.textContent = 'Spot held for ' + (emailInput.value || '').trim();
+          }
+          if (typeof fbq !== 'undefined') {
+            fbq('track', 'Lead', { content_name: 'WaitlistSignup' });
+          }
         }
       </script>
       <script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
@@ -454,48 +460,7 @@ src="https://www.facebook.com/tr?id=1774947069974247&ev=PageView&noscript=1"
   </div>
 </footer>
 
-<script>
-  (function () {
-    var form = document.getElementById('waitlist');
-    var emailInput = document.getElementById('email');
-    var fineprint = document.getElementById('fineprint');
 
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var v = (emailInput.value || '').trim();
-      if (!v || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
-        emailInput.focus();
-        return;
-      }
-
-      var btn = form.querySelector('button[type="submit"]');
-      btn.disabled = true;
-      btn.textContent = 'Saving…';
-
-      var body = new FormData();
-      body.append('email_address', v);
-
-      fetch('https://app.kit.com/forms/9526594/subscriptions', {
-        method: 'POST',
-        body: body,
-        headers: { 'Accept': 'application/json' }
-      })
-      .then(function (res) { return res.json(); })
-      .then(function () {
-        document.body.classList.add('is-confirmed');
-        fineprint.textContent = 'Spot held for ' + v;
-        if (typeof fbq !== 'undefined') {
-          fbq('track', 'Lead', { content_name: 'WaitlistSignup' });
-        }
-      })
-      .catch(function () {
-        btn.disabled = false;
-        btn.textContent = 'Keep my spot →';
-        fineprint.textContent = 'Something went wrong — please try again.';
-      });
-    });
-  })();
-</script>
 
 
 
