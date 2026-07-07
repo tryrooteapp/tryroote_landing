@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Roote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg:        oklch(0.972 0.008 85);
+    --paper:     oklch(0.985 0.006 85);
+    --ink:       oklch(0.18 0.012 90);
+    --ink-2:     oklch(0.32 0.012 90);
+    --muted:     oklch(0.52 0.012 90);
+    --line:      oklch(0.88 0.012 85);
+    --accent:    oklch(0.44 0.075 145);
+    --accent-2:  oklch(0.62 0.075 145);
+    --accent-wash: oklch(0.94 0.025 145);
+
+    --serif: "EB Garamond", "Times New Roman", Georgia, serif;
+    --sans:  "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono:  "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a { color: var(--accent); }
+  a:hover { text-decoration: underline; }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* NAV */
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 26px 0 22px;
+    border-bottom: 1px solid var(--line);
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--serif); font-weight: 400; font-size: 22px;
+    letter-spacing: -0.01em;
+    text-decoration: none; color: var(--ink);
+  }
+  .brand-mark {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--accent-2), var(--accent) 60%);
+    box-shadow: inset 0 0 0 1px oklch(0.30 0.05 145 / .35);
+  }
+  .nav-back {
+    font-family: var(--mono); font-size: 12px; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted); text-decoration: none;
+  }
+  .nav-back:hover { color: var(--accent); }
+
+  /* CONTENT */
+  .doc-header {
+    padding: 64px 0 40px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 48px;
+  }
+  .doc-header .eyebrow {
+    font-family: var(--mono); font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--muted); margin-bottom: 12px;
+  }
+  .doc-header h1 {
+    font-family: var(--serif); font-weight: 400; font-size: 40px;
+    line-height: 1.15; letter-spacing: -0.01em; margin: 0 0 16px;
+  }
+  .doc-header .meta {
+    font-size: 13px; color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  .doc-body { padding-bottom: 80px; }
+
+  .doc-body h2 {
+    font-family: var(--serif); font-weight: 500; font-size: 22px;
+    margin: 48px 0 12px; letter-spacing: -0.005em;
+  }
+  .doc-body h3 {
+    font-size: 14px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--ink-2);
+    margin: 28px 0 8px;
+  }
+  .doc-body p { margin: 0 0 16px; color: var(--ink-2); }
+  .doc-body ul, .doc-body ol {
+    margin: 0 0 16px; padding-left: 24px; color: var(--ink-2);
+  }
+  .doc-body li { margin-bottom: 6px; }
+  .doc-body strong { color: var(--ink); font-weight: 600; }
+
+  .callout {
+    background: var(--accent-wash);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 18px;
+    margin: 24px 0;
+    font-size: 14.5px;
+    color: var(--ink-2);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 32px 0 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono); font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  footer .links { display: flex; gap: 24px; }
+  footer a { text-decoration: none; color: var(--muted); }
+  footer a:hover { color: var(--ink); }
+
+  @media (max-width: 640px) {
+    .container { padding: 0 24px; }
+    .doc-header h1 { font-size: 30px; }
+    footer { flex-direction: column; gap: 14px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <nav class="nav">
+    <a class="brand" href="../beta-biohacker/index.html">
+      <span class="brand-mark"></span>
+      Roote
+    </a>
+    <a class="nav-back" href="../beta-biohacker/index.html">← Back</a>
+  </nav>
+
+  <header class="doc-header">
+    <div class="eyebrow">Legal</div>
+    <h1>Privacy Policy</h1>
+    <div class="meta">Effective date: July 7, 2026 &nbsp;·&nbsp; Last updated: July 7, 2026</div>
+  </header>
+
+  <div class="doc-body">
+
+    <div class="callout">
+      Roote is in closed beta. We collect the minimum data needed to run the product and never sell your health information to anyone.
+    </div>
+
+    <h2>1. Who We Are</h2>
+    <p>Roote Labs, Inc. ("Roote," "we," "our," or "us") operates the Roote mobile application and website at tryroote.com. We help biohackers track personal experiments and understand whether their protocols are actually working.</p>
+    <p>Questions? Email us at <a href="mailto:privacy@tryroote.com">privacy@tryroote.com</a>.</p>
+
+    <h2>2. Information We Collect</h2>
+
+    <h3>Information you provide</h3>
+    <ul>
+      <li><strong>Account data</strong> — name, email address, and password when you sign up.</li>
+      <li><strong>Health &amp; experiment data</strong> — biomarker logs, protocol entries, check-in responses, lab results, and any notes you record inside the app.</li>
+      <li><strong>Communications</strong> — messages you send us via support or feedback forms.</li>
+    </ul>
+
+    <h3>Information collected automatically</h3>
+    <ul>
+      <li><strong>Usage data</strong> — pages visited, features used, tap/click events, and session duration.</li>
+      <li><strong>Device data</strong> — device model, OS version, browser type, and IP address.</li>
+      <li><strong>Cookies &amp; pixels</strong> — we use a Facebook Pixel on our marketing pages to measure ad performance (not inside the app).</li>
+    </ul>
+
+    <h3>Information from third parties</h3>
+    <ul>
+      <li>If you connect a wearable or lab service (e.g. Oura, Whoop, Function Health), we receive only the data types you explicitly authorize.</li>
+    </ul>
+
+    <h2>3. How We Use Your Information</h2>
+    <ul>
+      <li>Provide, maintain, and improve the Roote app and your personal experiment dashboard.</li>
+      <li>Send you check-in reminders, protocol nudges, and product updates (opt-out any time).</li>
+      <li>Analyze aggregate, de-identified trends across users to improve our AI models — your identifiable health data is never used for this without explicit consent.</li>
+      <li>Comply with legal obligations and enforce our Terms of Use.</li>
+    </ul>
+
+    <h2>4. How We Share Your Information</h2>
+    <p>We do <strong>not</strong> sell your personal data or health information. We share data only in these limited cases:</p>
+    <ul>
+      <li><strong>Service providers</strong> — cloud hosting, analytics, and email vendors who process data on our behalf under strict data-processing agreements.</li>
+      <li><strong>Legal requirements</strong> — if required by law, court order, or to protect the rights and safety of our users.</li>
+      <li><strong>Business transfers</strong> — in the event of a merger or acquisition, your data may transfer to a successor entity. We will notify you before that happens.</li>
+    </ul>
+
+    <h2>5. Data Retention</h2>
+    <p>We keep your account and health data for as long as your account is active. You can request deletion at any time by emailing <a href="mailto:privacy@tryroote.com">privacy@tryroote.com</a>. We will delete or anonymize your data within 30 days, except where required by law to retain it longer.</p>
+
+    <h2>6. Security</h2>
+    <p>We use encryption in transit (TLS) and at rest, access controls, and regular security reviews. No system is perfectly secure, and we encourage you to use a strong, unique password and enable two-factor authentication when available.</p>
+
+    <h2>7. Your Rights</h2>
+    <p>Depending on your location, you may have the right to:</p>
+    <ul>
+      <li>Access the personal data we hold about you.</li>
+      <li>Correct inaccurate data.</li>
+      <li>Request deletion of your data.</li>
+      <li>Object to or restrict certain processing.</li>
+      <li>Export your data in a portable format.</li>
+    </ul>
+    <p>To exercise any of these rights, contact us at <a href="mailto:privacy@tryroote.com">privacy@tryroote.com</a>.</p>
+
+    <h2>8. Children's Privacy</h2>
+    <p>Roote is not directed to children under 13. We do not knowingly collect personal data from anyone under 13. If you believe we have inadvertently collected such data, please contact us and we will delete it promptly.</p>
+
+    <h2>9. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. When we make material changes, we will notify you via email or an in-app notice at least 14 days before the change takes effect. Continued use of Roote after that date constitutes acceptance of the updated policy.</p>
+
+    <h2>10. Contact</h2>
+    <p>Roote Labs, Inc.<br>
+    Email: <a href="mailto:privacy@tryroote.com">privacy@tryroote.com</a></p>
+
+  </div>
+
+  <footer>
+    <div>© 2026 Roote Labs · Made for people running their own n=1</div>
+    <div class="links">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="https://x.com/tryroote" target="_blank" rel="noopener">@tryroote</a>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>

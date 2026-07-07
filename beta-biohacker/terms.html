@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terms of Use — Roote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg:        oklch(0.972 0.008 85);
+    --paper:     oklch(0.985 0.006 85);
+    --ink:       oklch(0.18 0.012 90);
+    --ink-2:     oklch(0.32 0.012 90);
+    --muted:     oklch(0.52 0.012 90);
+    --line:      oklch(0.88 0.012 85);
+    --accent:    oklch(0.44 0.075 145);
+    --accent-2:  oklch(0.62 0.075 145);
+    --accent-wash: oklch(0.94 0.025 145);
+
+    --serif: "EB Garamond", "Times New Roman", Georgia, serif;
+    --sans:  "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono:  "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a { color: var(--accent); }
+  a:hover { text-decoration: underline; }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* NAV */
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 26px 0 22px;
+    border-bottom: 1px solid var(--line);
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--serif); font-weight: 400; font-size: 22px;
+    letter-spacing: -0.01em;
+    text-decoration: none; color: var(--ink);
+  }
+  .brand-mark {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--accent-2), var(--accent) 60%);
+    box-shadow: inset 0 0 0 1px oklch(0.30 0.05 145 / .35);
+  }
+  .nav-back {
+    font-family: var(--mono); font-size: 12px; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted); text-decoration: none;
+  }
+  .nav-back:hover { color: var(--accent); }
+
+  /* CONTENT */
+  .doc-header {
+    padding: 64px 0 40px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 48px;
+  }
+  .doc-header .eyebrow {
+    font-family: var(--mono); font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--muted); margin-bottom: 12px;
+  }
+  .doc-header h1 {
+    font-family: var(--serif); font-weight: 400; font-size: 40px;
+    line-height: 1.15; letter-spacing: -0.01em; margin: 0 0 16px;
+  }
+  .doc-header .meta {
+    font-size: 13px; color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  .doc-body { padding-bottom: 80px; }
+
+  .doc-body h2 {
+    font-family: var(--serif); font-weight: 500; font-size: 22px;
+    margin: 48px 0 12px; letter-spacing: -0.005em;
+  }
+  .doc-body h3 {
+    font-size: 14px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--ink-2);
+    margin: 28px 0 8px;
+  }
+  .doc-body p { margin: 0 0 16px; color: var(--ink-2); }
+  .doc-body ul, .doc-body ol {
+    margin: 0 0 16px; padding-left: 24px; color: var(--ink-2);
+  }
+  .doc-body li { margin-bottom: 6px; }
+  .doc-body strong { color: var(--ink); font-weight: 600; }
+
+  .callout {
+    background: var(--accent-wash);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 18px;
+    margin: 24px 0;
+    font-size: 14.5px;
+    color: var(--ink-2);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 32px 0 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono); font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  footer .links { display: flex; gap: 24px; }
+  footer a { text-decoration: none; color: var(--muted); }
+  footer a:hover { color: var(--ink); }
+
+  @media (max-width: 640px) {
+    .container { padding: 0 24px; }
+    .doc-header h1 { font-size: 30px; }
+    footer { flex-direction: column; gap: 14px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <nav class="nav">
+    <a class="brand" href="../beta-biohacker/index.html">
+      <span class="brand-mark"></span>
+      Roote
+    </a>
+    <a class="nav-back" href="../beta-biohacker/index.html">← Back</a>
+  </nav>
+
+  <header class="doc-header">
+    <div class="eyebrow">Legal</div>
+    <h1>Terms of Use</h1>
+    <div class="meta">Effective date: July 7, 2026 &nbsp;·&nbsp; Last updated: July 7, 2026</div>
+  </header>
+
+  <div class="doc-body">
+
+    <div class="callout">
+      Roote is a personal experiment tracking tool — not a medical device. Nothing here is medical advice. Please read Sections 5 and 6 carefully.
+    </div>
+
+    <h2>1. Acceptance of Terms</h2>
+    <p>By accessing or using Roote (the "Service"), you agree to be bound by these Terms of Use ("Terms") and our <a href="privacy.html">Privacy Policy</a>. If you do not agree, do not use the Service.</p>
+    <p>These Terms form a binding agreement between you and Roote Labs, Inc. ("Roote," "we," "our," or "us"). We may update these Terms from time to time; continued use of the Service after we post changes constitutes your acceptance.</p>
+
+    <h2>2. Eligibility</h2>
+    <p>You must be at least 18 years old to use Roote. By using the Service, you represent that you meet this requirement and that all information you provide is accurate and complete.</p>
+
+    <h2>3. Beta Access</h2>
+    <p>Roote is currently in closed beta. Access is granted by invitation only. You agree not to share your access credentials or invite link without our explicit permission. Beta features may change, be removed, or be replaced without notice.</p>
+
+    <h2>4. Your Account</h2>
+    <ul>
+      <li>You are responsible for maintaining the confidentiality of your login credentials.</li>
+      <li>You are responsible for all activity that occurs under your account.</li>
+      <li>Notify us immediately at <a href="mailto:support@tryroote.com">support@tryroote.com</a> if you suspect unauthorized access.</li>
+      <li>You may not create accounts on behalf of others without their explicit consent.</li>
+    </ul>
+
+    <h2>5. Not Medical Advice</h2>
+    <p>Roote is a personal data tracking and experiment logging tool. <strong>It is not a medical device, and nothing in the Service constitutes medical advice, diagnosis, or treatment.</strong> The information provided by Roote — including AI-generated summaries, trend analysis, and protocol suggestions — is for informational and personal research purposes only.</p>
+    <p>Always consult a qualified healthcare provider before making changes to your diet, supplementation, medication, exercise, or any other health-related behavior. Do not disregard professional medical advice or delay seeking it because of something you read or see in the Service.</p>
+
+    <h2>6. Assumption of Risk</h2>
+    <p>Self-experimentation (n=1 research) carries inherent risks. By using Roote, you acknowledge that:</p>
+    <ul>
+      <li>You are voluntarily choosing to track and analyze your own health data.</li>
+      <li>Biomarker trends and AI insights may be incomplete, inaccurate, or inapplicable to your specific situation.</li>
+      <li>You assume full responsibility for any actions you take based on information in the Service.</li>
+    </ul>
+
+    <h2>7. Your Content</h2>
+    <p>You retain ownership of all health data, notes, and other content you submit to Roote ("Your Content"). By submitting Your Content, you grant Roote a limited, non-exclusive license to store, process, and display it solely to provide the Service to you.</p>
+    <p>We may use de-identified, aggregated data derived from Your Content to improve our models and the Service. We will never identify you personally in such analysis without your explicit consent.</p>
+
+    <h2>8. Prohibited Conduct</h2>
+    <p>You agree not to:</p>
+    <ul>
+      <li>Use the Service for any unlawful purpose or in violation of these Terms.</li>
+      <li>Attempt to reverse-engineer, scrape, or extract data from the Service.</li>
+      <li>Upload content that is harmful, fraudulent, or violates the rights of others.</li>
+      <li>Attempt to gain unauthorized access to any part of the Service or its infrastructure.</li>
+      <li>Resell, sublicense, or commercially exploit the Service without our written permission.</li>
+    </ul>
+
+    <h2>9. Intellectual Property</h2>
+    <p>All software, design, copy, and other materials in the Service (excluding Your Content) are owned by or licensed to Roote Labs, Inc. and are protected by copyright, trademark, and other intellectual property laws. Nothing in these Terms grants you any right to use Roote's branding, trademarks, or proprietary technology.</p>
+
+    <h2>10. Third-Party Integrations</h2>
+    <p>Roote may integrate with third-party services (e.g. wearables, lab platforms). Your use of those services is governed by their own terms and privacy policies. We are not responsible for the practices of third-party providers.</p>
+
+    <h2>11. Disclaimers</h2>
+    <p>The Service is provided <strong>"as is"</strong> and <strong>"as available"</strong> without warranties of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, and non-infringement. We do not warrant that the Service will be uninterrupted, error-free, or free of harmful components.</p>
+
+    <h2>12. Limitation of Liability</h2>
+    <p>To the maximum extent permitted by law, Roote Labs, Inc. and its officers, employees, and affiliates will not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of, or inability to use, the Service — including any health outcomes — even if we have been advised of the possibility of such damages. Our total liability to you for any claim arising from these Terms or the Service will not exceed the greater of $100 or the amount you paid us in the 12 months preceding the claim.</p>
+
+    <h2>13. Indemnification</h2>
+    <p>You agree to indemnify and hold harmless Roote Labs, Inc. and its affiliates from any claims, losses, liabilities, and expenses (including legal fees) arising from your use of the Service or violation of these Terms.</p>
+
+    <h2>14. Termination</h2>
+    <p>We may suspend or terminate your access to the Service at any time for any reason, including violation of these Terms. You may delete your account at any time from the app settings or by emailing <a href="mailto:support@tryroote.com">support@tryroote.com</a>. Sections 5, 6, 9, 11, 12, and 13 survive termination.</p>
+
+    <h2>15. Governing Law</h2>
+    <p>These Terms are governed by the laws of the State of Delaware, without regard to its conflict-of-law principles. Any disputes will be resolved exclusively in the state or federal courts located in Delaware.</p>
+
+    <h2>16. Contact</h2>
+    <p>Roote Labs, Inc.<br>
+    Email: <a href="mailto:support@tryroote.com">support@tryroote.com</a></p>
+
+  </div>
+
+  <footer>
+    <div>© 2026 Roote Labs · Made for people running their own n=1</div>
+    <div class="links">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="https://x.com/tryroote" target="_blank" rel="noopener">@tryroote</a>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
